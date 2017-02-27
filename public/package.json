@@ -1,0 +1,11 @@
+{
+    "name": "room",
+    "description": "Sample GameOn! room client",
+    "version": "0.0.1",
+    "engines": {
+        "node": ">=0.8.0"
+    },
+    "dependencies": {
+        "websocket": "^1.0.23"
+    }
+}
