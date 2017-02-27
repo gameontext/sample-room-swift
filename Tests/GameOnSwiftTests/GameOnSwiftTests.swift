@@ -17,6 +17,8 @@
 import Foundation
 import XCTest
 
+@testable import SwiftRoom
+
 class GameOnSwiftTests: XCTestCase {
     
     static var allTests: [( )] {

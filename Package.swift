@@ -20,13 +20,11 @@ let package = Package(
     name: "GameOn",
     targets: [
         Target(
-            Target(
-                name: "GameOn",
-                dependencies: [.Target(name: "SwiftRoom")]
-            ),
-            Target(
-                name: "SwiftRoom"
-            )
+            name: "SwiftRoom"
+        ),
+        Target(
+            name: "GameOn",
+            dependencies: [.Target(name: "SwiftRoom")]
         )
     ],
     dependencies: [

@@ -18,8 +18,8 @@ import Foundation
 
 import KituraNet
 import KituraWebSocket
-
 import LoggerAPI
+import SwiftRoom
 
 WebSocket.register(service: RoomEndpoint(), onPath: "room")
 
