@@ -17,10 +17,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "sample-room-swift",
+    name: "GameOn",
     targets: [
         Target(
-            name: "GameOn"
+            Target(
+                name: "GameOn",
+                dependencies: [.Target(name: "SwiftRoom")]
+            ),
+            Target(
+                name: "SwiftRoom"
+            )
         )
     ],
     dependencies: [
