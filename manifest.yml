@@ -1,6 +1,6 @@
 applications:
-- name: sample-room-swift
+- name: GameOn
   memory: 256M
   instances: 1
   random-route: true
-  command: sample-room-swift
+  command: GameOn

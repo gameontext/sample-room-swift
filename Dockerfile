@@ -18,7 +18,7 @@
 
 FROM ibmcom/swift-ubuntu:latest
 MAINTAINER IBM Swift Engineering at IBM Cloud
-LABEL Description="Linux Ubuntu 14.04 image with the Swift binaries
+LABEL Description="Linux Ubuntu 14.04 image with the Swift binaries"
 
 EXPOSE 8090
 
@@ -30,5 +30,5 @@ COPY . $HOME
 # Compile the application
 RUN swift build --configuration release
 
-CMD .build/release/sample-room-swift
+CMD .build/release/GameOn
 
