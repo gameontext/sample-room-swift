@@ -1,0 +1,33 @@
+{
+  "name": "GameOn",
+  "version": "1.0.0",
+  "description": "GameOn! room implemented in Swift",
+  "main": "swiftRoomClient.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "eslint": "^3.16.1",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gameontext/sample-room-swift.git"
+  },
+  "keywords": [
+    "swift",
+    "sample"
+  ],
+  "author": "Jennie Oliver",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gameontext/sample-room-swift/issues"
+  },
+  "homepage": "https://github.com/gameontext/sample-room-swift#readme"
+}

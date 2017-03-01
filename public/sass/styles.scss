@@ -1,0 +1,23 @@
+.callout {
+border: 1px solid grey;
+margin: 1em;
+padding: .5em;
+}
+input:disabled { background-color: gray; }
+
+#socketUrl {
+color: blue;
+}
+
+.alignCenter {
+text-align: center;
+}
+
+.activityOutput {
+width: 90%;
+margin: 0 auto;
+border: 1px solid gray;
+height: 20rem;
+max-height:40rem;
+overflow-y: scroll
+}
