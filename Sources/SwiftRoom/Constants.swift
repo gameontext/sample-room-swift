@@ -69,7 +69,7 @@ public struct Constants {
         static let userId = "userId"
         
         /** JSON element specifying the username. */
-        static let userName = "username"
+        static let username = "username"
         
         /** JSON element specifying the content of message. */
         static var content = "content"

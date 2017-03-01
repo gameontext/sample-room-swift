@@ -51,10 +51,10 @@ public class Message {
     // Stringified JSON payload
     let payload: String
     
-    // userId and userName will be present in JSON payload
+    // userId and username will be present in JSON payload
     let userId: String?
     
-    let userName: String?
+    let username: String?
     
     // Parse a string read from the WebSocket
     public init(message: String) throws {
@@ -101,7 +101,7 @@ public class Message {
         let json = JSON(data: payloadJSON)
         
         self.userId = json["userId"].stringValue
-        self.userName = json["userName"].stringValue
+        self.username = json["username"].stringValue
         
     }
     
@@ -118,7 +118,7 @@ public class Message {
         let json = JSON(data: payloadJSON)
         
         self.userId = json["userId"].stringValue
-        self.userName = json["userName"].stringValue
+        self.username = json["username"].stringValue
     }
     
     
@@ -185,7 +185,7 @@ public class Message {
         
     }
     
-    public static func createChatMessage(userName: String, message: String) throws ->  Message {
+    public static func createChatMessage(username: String, message: String) throws ->  Message {
         //  player,*,{...}
         //  {
         //    "type": "chat",
@@ -196,7 +196,7 @@ public class Message {
         
         let payload: JSON = [
             Constants.Message.type: Constants.Message.chat,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             Constants.Message.content: message,
             Constants.Message.bookmark: Constants.Message.prefix + uniqueStr()
         ]
@@ -271,7 +271,7 @@ public class Message {
     }
     
     // Used for test purposes, create a message targeted for the room
-    public static func createRoomMessage(roomId: String, userId: String, userName: String, content: String) throws -> Message {
+    public static func createRoomMessage(roomId: String, userId: String, username: String, content: String) throws -> Message {
         //  room,<roomId>,{
         //      "username": "<username>",
         //      "userId": "<userId>"
@@ -280,7 +280,7 @@ public class Message {
         
         let payload: JSON = [
             Constants.Message.userId: userId,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             Constants.Message.content: content
         ]
         
@@ -291,17 +291,17 @@ public class Message {
     }
     
     // Used for test purposes, create a room hello message
-    public static func createRoomHello(roomId: String, userId: String, userName: String, version: Int) throws -> Message {
+    public static func createRoomHello(roomId: String, userId: String, username: String, version: Int) throws -> Message {
         
         //  roomHello,<roomId>,{
-        //      "username": "<userName>",
+        //      "username": "<username>",
         //      "userId": "<userId>",
         //      "version": 1|2
         //  }
         
         let payload: JSON = [
             Constants.Message.userId: userId,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             "version": version
         ]
         
@@ -312,15 +312,15 @@ public class Message {
     }
     
     // Used for test purposes, create a room goodbye message
-    public static func createRoomGoodbye(roomId: String, userId: String, userName: String) throws -> Message {
+    public static func createRoomGoodbye(roomId: String, userId: String, username: String) throws -> Message {
         //  roomGoodbye,<roomId>,{
-        //      "username": "<userName>",
+        //      "username": "<username>",
         //      "userId": "<userId>"
         //  }
         
         let payload: JSON = [
             Constants.Message.userId: userId,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             ]
         
         let payloadStr = try jsonToString(json: payload)
@@ -330,16 +330,16 @@ public class Message {
     }
     
     // Used for test purposes, create a room join message
-    public static func createRoomJoin(roomId: String, userId: String, userName: String, version: Int) throws -> Message {
+    public static func createRoomJoin(roomId: String, userId: String, username: String, version: Int) throws -> Message {
         //  roomJoin,<roomId>,{
-        //      "username": "<userName>",
+        //      "username": "<username>",
         //      "userId": "<userId>",
         //      "version": 2
         //  }
         
         let payload: JSON = [
             Constants.Message.userId: userId,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             "version": version
         ]
         
@@ -350,15 +350,15 @@ public class Message {
     }
     
     // Used for test purposes, create a room part message
-    public static func createRoomPart(roomId: String, userId: String, userName: String) throws -> Message {
+    public static func createRoomPart(roomId: String, userId: String, username: String) throws -> Message {
         //  roomPart,<roomId>,{
-        //      "username": "<userName>",
+        //      "username": "<username>",
         //      "userId": "<userId>"
         //  }
         
         let payload: JSON = [
             Constants.Message.userId: userId,
-            Constants.Message.userName: userName,
+            Constants.Message.username: username,
             ]
         
         let payloadStr = try jsonToString(json: payload)

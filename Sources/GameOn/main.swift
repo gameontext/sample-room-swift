@@ -16,20 +16,34 @@
 
 import Foundation
 
+import Kitura
 import KituraNet
 import KituraWebSocket
 import LoggerAPI
 import SwiftRoom
+import Kitura
 
 WebSocket.register(service: RoomEndpoint(), onPath: "room")
 
+let router = Router()
+router.all("/", middleware: StaticFileServer(path: "public"))
+
+let port = Int(ProcessInfo.processInfo.environment["PORT"] ?? "8080") ?? 8080
+
+Kitura.addHTTPServer(onPort: port, with: router)
+
+Kitura.run()
+
 class RoomDelegate: ServerDelegate {
-    public func handle(request: ServerRequest, response: ServerResponse) {}
+    
+    public func handle(request: ServerRequest, response: ServerResponse) {
+    }
 }
 
 // Add HTTP Server to listen on port 8090
 let server = HTTP.createServer()
 server.delegate = RoomDelegate()
+
 
 do {
     try server.listen(on: 8090)

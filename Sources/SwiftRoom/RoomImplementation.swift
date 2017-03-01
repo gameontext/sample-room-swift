@@ -29,7 +29,7 @@ public class RoomImplementation {
         
         let userId = message.userId ?? ""
         
-        let userName = message.userName ?? ""
+        let username = message.username ?? ""
         
         let target = message.target.rawValue
 
@@ -43,7 +43,7 @@ public class RoomImplementation {
             // Say hello to a new person in the room
             try endpoint.sendMessage(connection: connection,
                                      message: Message.createBroadcastEvent(
-                                        allContent: Constants.Room.helloAll(name: userName),
+                                        allContent: Constants.Room.helloAll(name: username),
                                         pairs: [userId, Constants.Room.helloUser]))
             
             Log.info("roomHello")
@@ -62,7 +62,7 @@ public class RoomImplementation {
             // Say goodbye to person leaving the room
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createBroadcastEvent(
-                                    allContent: Constants.Room.goodbyeAll(name: userName),
+                                    allContent: Constants.Room.goodbyeAll(name: username),
                                     pairs: [userId, Constants.Room.goodbyeUser] ))
             
             break;
@@ -85,7 +85,7 @@ public class RoomImplementation {
             else {
                 
                 try endpoint.sendMessage(connection: connection,
-                                     message: Message.createChatMessage(userName: userName, message: content))
+                                     message: Message.createChatMessage(username: username, message: content))
             }
             Log.info("room")
             break;
@@ -106,7 +106,7 @@ public class RoomImplementation {
         
         let userId = message.userId ?? ""
         
-        let userName = message.userName ?? ""
+        let username = message.username ?? ""
         
         let firstWord: String, remainder: String?
         
@@ -171,11 +171,11 @@ public class RoomImplementation {
             let allContent: String, toUserId: String
             
             if let remainder = remainder {
-                allContent = "Ping! Pong sent to " + userName + ": " + remainder
+                allContent = "Ping! Pong sent to " + username + ": " + remainder
                 toUserId = "Ping! Pong " + remainder
             }
             else {
-                allContent = "Ping! Pong sent to " + userName
+                allContent = "Ping! Pong sent to " + username
                 toUserId = "Ping! Pong"
             }
             
