@@ -49,5 +49,5 @@ do {
     try server.listen(on: 8090)
     ListenerGroup.waitForListeners()
 } catch {
-    Log.error("Error listening on port 8090: \(error).")
+    Log.error("Error listening on port 8080: \(error).")
 }

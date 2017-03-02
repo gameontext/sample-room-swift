@@ -15,6 +15,7 @@
  **/
 
 var websocket = null;
+//var websocketUrl = "ws://" + window.document.location.host ;
 var websocketUrl = "ws://" + window.document.location.host + "/room";
 var healthUrl = "http://" + window.document.location.host + "/rest/health";
 
@@ -28,7 +29,7 @@ var partButton = document.getElementById("partButton");
 var roomId = document.getElementById("roomId");
 var response = document.getElementById("response");
 
-document.getElementById("socketUrl").innerHTML = websocketUrl;
+//document.getElementById("socketUrl").innerHTML = websocketUrl;
 //document.getElementById("healthUrl").innerHTML = healthUrl;
 
 function connect() {
@@ -38,8 +39,9 @@ function connect() {
         response.innerHTML = "";
 
         websocket = new WebSocket(websocketUrl);
-        
+        console.log("new websocket: %o", websocket);
         websocket.onerror = function(event) {
+            console.log("error! "+ event.data)
             response.innerHTML += "Error: " + event.data + "<br />";
         };
         

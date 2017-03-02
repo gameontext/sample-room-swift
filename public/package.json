@@ -1,5 +1,5 @@
-{
-    "name": "room",
+/*{
+    "name": "GameOn",
     "description": "Sample GameOn! room client",
     "version": "0.0.1",
     "engines": {
@@ -9,3 +9,4 @@
         "websocket": "^1.0.23"
     }
 }
+*/

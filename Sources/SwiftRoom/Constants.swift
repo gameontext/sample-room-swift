@@ -50,34 +50,24 @@ public struct Constants {
     
     struct Message {
         
-        /**
-         * prefix for bookmark: customize it! Just doing something here to make
-         * it less likely to collide with other rooms.
-         */
+        // Prefix for bookmark, this is appended with a unique string. Customize it!
         static let prefix = "room-"
         
-        /** JSON element specifying the type of message. */
+        // The below constants are JSON elements specifying parts of a message
         static let type = "type"
         
-        /** Type of message to indicate room events */
         static let event = "event"
         
-        /** */
         static let chat = "chat"
         
-        /** JSON element specifying the user id. */
         static let userId = "userId"
         
-        /** JSON element specifying the username. */
         static let username = "username"
         
-        /** JSON element specifying the content of message. */
         static var content = "content"
         
-        /** JSON element specifying the content bookmark. */
         static let bookmark = "bookmark"
         
-        /** Messages sent to everyone */
         static let all = "*"
         
     }
