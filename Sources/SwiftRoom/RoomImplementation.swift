@@ -32,7 +32,7 @@ public class RoomImplementation {
         let username = message.username ?? ""
         
         let target = message.target.rawValue
-
+print("Target: \(target)")
         switch target {
         case "roomHello":
             
@@ -74,7 +74,13 @@ public class RoomImplementation {
         case "room":
             
             // This message will be either a command or a chat
-            let json = JSON(message.payload)
+            guard let payloadJSON = (message.payload).data(using: String.Encoding.utf8) else {
+                //throw SwiftRoomError.errorInJSONProcessing
+                break;
+            }
+            
+            let json = JSON(data: payloadJSON)
+
             let content = json[Constants.Message.content].stringValue
             
             if let first = content.characters.first, first == "/" {
@@ -149,7 +155,6 @@ public class RoomImplementation {
             break;
         
         case "/look", "/examine":
-            
             if let remainder = remainder, remainder.range(of: "room") == nil {
                 try endpoint.sendMessage(connection: connection,
                                      message: Message.createSpecificEvent(userId: userId, messageForUser: Constants.Room.lookUnknown))
