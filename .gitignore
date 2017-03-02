@@ -5,6 +5,10 @@
 ## Build generated
 build/
 DerivedData/
+node_modules
+public/css
+Packages
+*.xcodeproj
 
 ## Various settings
 *.pbxuser

@@ -4,3 +4,4 @@ applications:
   instances: 1
   random-route: true
   command: GameOn
+  buildpack: swift_buildpack

@@ -28,11 +28,9 @@ public class RoomImplementation {
         let message: Message = try Message(message: messageStr)
         
         let userId = message.userId ?? ""
-        
         let username = message.username ?? ""
-        
         let target = message.target.rawValue
-print("Target: \(target)")
+
         switch target {
         case "roomHello":
             
@@ -46,7 +44,6 @@ print("Target: \(target)")
                                         allContent: Constants.Room.helloAll(name: username),
                                         pairs: [userId, Constants.Room.helloUser]))
             
-            Log.info("roomHello")
             break;
             
         case "roomJoin":
@@ -54,7 +51,6 @@ print("Target: \(target)")
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
             
-            Log.info("roomJoin")
             break;
             
         case "roomGoodbye":
@@ -68,32 +64,27 @@ print("Target: \(target)")
             break;
             
         case "roomPart":
-            Log.info("roomPart")
+            // TODO ??
             break;
             
         case "room":
             
             // This message will be either a command or a chat
             guard let payloadJSON = (message.payload).data(using: String.Encoding.utf8) else {
-                //throw SwiftRoomError.errorInJSONProcessing
-                break;
+                throw SwiftRoomError.errorInJSONProcessing
             }
             
             let json = JSON(data: payloadJSON)
-
             let content = json[Constants.Message.content].stringValue
             
-            if let first = content.characters.first, first == "/" {
-                
+            if messageIsCommand(content: content) {
                 try processCommand(message: message, content: content, endpoint: endpoint, connection: connection)
-                
             }
             else {
-                
                 try endpoint.sendMessage(connection: connection,
-                                     message: Message.createChatMessage(username: username, message: content))
+                                         message: Message.createChatMessage(username: username, message: content))
             }
-            Log.info("room")
+            
             break;
         default:
             Log.info("unknown message")
@@ -198,6 +189,15 @@ print("Target: \(target)")
             break;
         }
         
+    }
+    
+    private func messageIsCommand(content: String) -> Bool {
+        
+        if let first = content.characters.first, first == "/" {
+            return true
+        }
+        
+        return false
     }
     
     /**

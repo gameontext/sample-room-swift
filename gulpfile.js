@@ -58,4 +58,4 @@ gulp.task('run:server', function() {
         });
 });
 
-gulp.task('default', ['index','webpack','sass','compile:swift']);
+gulp.task('default', ['webpack','sass','compile:swift']);

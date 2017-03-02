@@ -22,7 +22,7 @@ public struct RoomDescription {
     
     var fullName = "A room with no full name"
     
-    var description = "An undescribed room (or perhaps the data hasn't been fetched from the map)"
+    var description = "Jennie's undescribed room"
     
     var inventory = [String]()
     

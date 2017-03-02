@@ -123,7 +123,6 @@ public class Message {
     
     
     public static func createAckMessage() -> String {
-        
         return Target.ack.rawValue + "," + "{\"version\":[1,2]}"
     }
     
@@ -277,7 +276,6 @@ public class Message {
         //      "userId": "<userId>"
         //      "content": "<message>"
         //  }
-        
         let payload: JSON = [
             Constants.Message.userId: userId,
             Constants.Message.username: username,
@@ -298,7 +296,6 @@ public class Message {
         //      "userId": "<userId>",
         //      "version": 1|2
         //  }
-        
         let payload: JSON = [
             Constants.Message.userId: userId,
             Constants.Message.username: username,
@@ -365,13 +362,7 @@ public class Message {
         
         return try Message(target: Target.roomPart, targetId: roomId, payload: payloadStr)
     }
-    
-    enum SwiftRoomError: LocalizedError {
-        case missingExitId
-        case errorInJSONProcessing
-        case invalidMessageFormat
-    }
-    
+        
     public func toString() -> String {
         
         return self.target.rawValue + "," + targetId + "," + payload
