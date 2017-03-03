@@ -33,27 +33,19 @@ You can set up your development environment and use XCode 8 for editing, buildin
 
   `swift package generate-xcodeproj`
   
-5. Run the `Deploy` target in Xcode and access [http://localhost:8090/](http://localhost:8090/) in your browser. Visiting this page provides a small form you can use to test the WebSocket endpoint in your service directly.
-
-## Quick start on Linux
-
-To build the project in Linux, you need to first install the Swift 3 toolchain.
-
-1. Install the [Swift 3.0 RELEASE toolchain](http://www.swift.org)
-
-2. Create your own fork of this repository ([what's a fork?](https://help.github.com/articles/fork-a-repo/))
-
-3. Create a local clone of your fork ([Cloning a repository](https://help.github.com/articles/cloning-a-repository/))
-
-  `git clone https://github.com/<your-forked-repo>/sample-room-swift.git`
+5. Install front-end dependencies including gulp and webpack
   
-4. Compile the project with `swift build` on Linux
+  `npm install`
+  
+6. Install Swift dependencies using gulp
 
-6. Run the server:
+  `gulp`
+  
+7. Run the server
 
- `.build/debug/Deploy`
- 
- Then access [http://localhost:8090/](http://localhost:8090/) in your browser. Visiting this page provides a small form you can use to test the WebSocket endpoint in your service directly.
+  `.build/debug/GameOn`
+  
+  Then access [http://localhost:8080/](http://localhost:8080/) in your browser. Visiting this page provides a small form you can use to test the WebSocket endpoint in your service directly.
  
 ## Make your room public!
 
