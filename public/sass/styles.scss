@@ -14,10 +14,58 @@ text-align: center;
 }
 
 .activityOutput {
-width: 90%;
-margin: 0 auto;
+/*width: 90%;*/
+margin: 0px !important;
 border: 1px solid gray;
 height: 20rem;
 max-height:40rem;
 overflow-y: scroll
+}
+
+.textInput {
+border: solid 1px;
+border-top-width: 0px;
+border-radius: 0px;
+}
+
+/* CSS talk bubble */
+.talk-bubble {
+margin: 40px;
+display: inline-block;
+position: relative;
+width: 200px;
+height: auto;
+background-color: lightyellow;
+}
+
+.round{
+border-radius: 30px;
+-webkit-border-radius: 30px;
+-moz-border-radius: 30px;
+
+}
+
+.tri-right.right-in:after{
+content: ' ';
+position: absolute;
+width: 0;
+height: 0;
+left: auto;
+right: -20px;
+top: 38px;
+bottom: auto;
+border: 12px solid;
+border-color: lightyellow transparent transparent lightyellow;
+}
+
+/* talk bubble contents */
+.talktext{
+padding: 1em;
+text-align: left;
+line-height: 1.5em;
+}
+.talktext p{
+/* remove webkit p margins */
+-webkit-margin-before: 0em;
+-webkit-margin-after: 0em;
 }

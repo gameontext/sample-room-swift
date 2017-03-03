@@ -17,6 +17,7 @@
 var websocket = null;
 //var websocketUrl = "ws://" + window.document.location.host ;
 var websocketUrl = "ws://" + window.document.location.host + "/room";
+//var websocketUrl = "ws://gameon-oligochaetous-ventriloquist.mybluemix.net/"
 var healthUrl = "http://" + window.document.location.host + "/rest/health";
 
 var inputMessage = document.getElementById("inputmessage");
@@ -26,11 +27,10 @@ var helloButton = document.getElementById("helloButton");
 var goodbyeButton = document.getElementById("goodbyeButton");
 var joinButton = document.getElementById("joinButton");
 var partButton = document.getElementById("partButton");
-var roomId = document.getElementById("roomId");
+var roomId = "roomId" //document.getElementById("roomId");
 var response = document.getElementById("response");
 
-//document.getElementById("socketUrl").innerHTML = websocketUrl;
-//document.getElementById("healthUrl").innerHTML = healthUrl;
+var pageLoaded
 
 function connect() {
     console.log("connect %o", websocket);
@@ -89,6 +89,7 @@ function sendSocket(payload) {
 }
 
 function disconnect() {
+    alert("disconnect!")
     console.log("disconnect %o", websocket);
     
     if ( websocket !== null ) {
@@ -190,3 +191,5 @@ function submit(event) {
     emulateClient();
 }
 document.getElementById("simpleForm").addEventListener("submit", submit, false);
+
+
