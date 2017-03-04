@@ -10,7 +10,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
-        
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            
     </head>
     <body>
         <div ng-controller="GameOnController as gameOn" ng-model="gameOn.connected.value" class="container">
@@ -28,31 +32,56 @@
             </div>
             <br/>
             <br/>
-            
-            <div id="response" class="activityOutput row" >
-                <div class="col-6">
-                    <div class="talk-bubble tri-right round right-in">
-                        <div class="talktext">
-                            <p>Moving our way back up the right side indented. Uses .round and .right-in</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="talk-bubble tri-right round right-in">
-                        <div class="talktext">
-                            <p>Moving our way back up the right side indented. Uses .round and .right-in</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <input type="text" class="form-control textInput" id="inputMessage" placeholder="Type something and press ENTER, type 'clear' to clear" disabled></input>
-            
-            <br/>
-            <button id="helloButton"  ng-click="hello()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomHello</button>
-            <button id="goodbyeButton"  ng-click="goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomGoodbye</button>
-            <button id="joinButton"  ng-click="join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomJoin</button>
-            <button id="partButton" ng-click="part()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomPart</button>
-        </div>
+<!--            TEST-->
+<div id="textarea" class="activityOutput"  >
+            <md-content >
+                <section >
+                    <md-list>
+                        <md-whiteframe ng-repeat="m in gameOn.messages" class="md-whiteframe-z2 message" layout layout-align="center center">
+                            <md-list-item class="md-2-line">
+                                <i class="material-icons md-avatar">perm_identity</i>
+<!--                                <img ng-src="img/user.png" class="md-avatar" alt="User" />-->
+                                <div class="md-list-item-text">
+                                    <h3>{{ m.username }}</h3>
+                                    <p>{{m.content}}</p>
+                                </div>
+                            </md-list-item>
+                        </md-whiteframe>
+                        
+                    </md-list>
+                </section>
+                
+            </md-content>
+    </div>
+    <div>
+        <input ng-model="gameOn.message.value" ng-enter="gameOn.send(gameOn.message.value)" type="text" class="form-control textInput" id="inputMessage" placeholder="Type something and press ENTER, type 'clear' to clear" ng-disabled="!gameOn.connected.value"></input>
+    </div>
+<!--            TEST -->
+
+<!--            <div id="response" class="activityOutput row" >-->
+<!--                <div class="col-6">-->
+<!--                    <div class="talk-bubble tri-right round right-in">-->
+<!--                        <div class="talktext">-->
+<!--                            <p>Moving our way back up the right side indented. Uses .round and .right-in</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    <div class="talk-bubble tri-right round right-in">-->
+<!--                        <div class="talktext">-->
+<!--                            <p>Moving our way back up the right side indented. Uses .round and .right-in</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <input type="text" class="form-control textInput" id="inputMessage" placeholder="Type something and press ENTER, type 'clear' to clear" disabled></input>-->
+<!--            -->
+<!--            <br/>-->
+<!--            <button id="helloButton"  ng-click="hello()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomHello</button>-->
+<!--            <button id="goodbyeButton"  ng-click="goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomGoodbye</button>-->
+<!--            <button id="joinButton"  ng-click="join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomJoin</button>-->
+<!--            <button id="partButton" ng-click="part()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomPart</button>-->
+<!--        </div>-->
 <!--            </div>-->
         <hr/>
         <div class="container">
