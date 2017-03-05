@@ -19,5 +19,5 @@ import XCTest
 @testable import GameOnTests 
 
 XCTMain([
-    testCase(GameOnTests.allTests)
+    testCase(MessageCreationTests.allTests)
     ])
