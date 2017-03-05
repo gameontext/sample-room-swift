@@ -1,77 +1,104 @@
-<!--
- Copyright (c) 2017 IBM Corp.
- 
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- 
- http://www.apache.org/licenses/LICENSE-2.0
- 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- -->
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html ng-app="gameOnApp">
     <head>
-        <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-                <link rel="stylesheet" href="css/styles.css"></link>
-    </head>
-    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <div class="container">
-            <div class="">
-                <div class="alignCenter">
-                    <h1>Your room is running! </h1>
-                    <br/>
-                    <h2>Test out your room... </h2>
-                    </br>
-                    <p>If your room pays attention to the room id, update this to match the target id:</p>
-                    <div class="input-group">
-                        <input type="text" class="form-control" value="TheGeneratedIdOfThisRoom" id="roomId">
-                            <span class="input-group-btn">
-                                <button id="connectButton" onclick="connect()" class="btn btn-primary" type="button">Connect</button>
-                            </span>
-                            <span class="input-group-btn">
-                                <button id="disconnectButton" onclick="disconnect()" class="btn btn-primary" type="button" disabled>Disconnect</button>
-                            </span>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        
+        <script src="gameOnSwift.js"></script>
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+    <body>
+        <div ng-controller="GameOnController as gameOn" ng-model="gameOn.connected.value" class="container">
+            <div class="alignCenter">
+                <br/><br/>
+                <h1>Your room is running! </h1>
+                <br/>
+                <h2>Test out your room... </h2>
+                
+                </br>
+                <button id="connectButton" ng-click="gameOn.connect()" class="btn btn-primary" type="button" ng-disabled="gameOn.connected.value">Start chat</button>
+                <button id="disconnectButton" ng-click="gameOn.disconnect()" class="btn btn-primary" type="button" ng-disabled="!gameOn.connected.value">End chat</button>
+                <br/>
+            </div>
+            <br/>
+            <br/>
+            
+            <div class="container">
+                <div class="row chat-window " id="chat_window_1" >
+                    <div class="col-xs-12 col-md-12" >
+                        <div class="panel panel-default" >
+                            <div class="panel-heading top-bar">
+                                <div class="col-md-8 col-xs-8">
+                                    <h3 class=""><span class="glyphicon glyphicon-comment"></span>GameOn! Swift chatroom</h3>
+                                </div>
+                            </div>
+                            <div class="panel-body msg_container_base setScroll" id="autoscroll">
+                                <div ng-repeat="m in gameOn.messages" >
+                                    
+                                    <div class="row msg_container base_sent" ng-show="m.origin=='client'">
+                                        <div class="col-md-10 col-xs-10">
+                                            <div class="messages msg_sent">
+                                                <p>{{m.content}}</p>
+                                                <time>{{m.username}}</time>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-xs-2 avatar">
+                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize "/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row msg_container base_receive" ng-show="m.origin=='server'">
+                                        <div class="col-md-2 col-xs-2 avatar">
+                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize img-receive-float"/>
+                                        </div>
+                                        <div class="col-md-10 col-xs-10">
+                                            <div class="messages msg_receive">
+                                                <p>{{m.content}}</p>
+                                                <time>{{m.username}}</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="input-group" id="simpleForm">
+                                    <input ng-model="gameOn.inputMessage.value" ng-enter="gameOn.evaluateInput()" id="inputmessage" type="text" class="form-control input-sm chat_input" placeholder="type something and press ENTER, type 'clear' to clear" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="gameOn.evaluateInput()">Send</button>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
-                    <br/>
                 </div>
-                <h3>Protocol operations:</h3>
-                <button id="helloButton"  onclick="hello()" disabled type="button" class="btn btn-primary">roomHello</button>
-                <button id="goodbyeButton"  onclick="goodbye()" disabled type="button" class="btn btn-primary">roomGoodbye</button>
-                <button id="joinButton"  onclick="join()" disabled type="button" class="btn btn-primary">roomJoin</button>
-                <button id="partButton" onclick="part()" disabled type="button" class="btn btn-primary">roomPart</button>
-                <br/>
-                <h3>User initiated commands:</h3>
-                <form id="simpleForm">
-                    <input type="text" id="inputmessage" size="50" placeholder="type something and press ENTER, type 'clear' to clear" disabled/>
-                </form>
-                <br/>
-                <h4>Activity:</h4>
-                <div id="response" class="activityOutput" style=""></div>
+                </br></br>
+                <button id="helloButton"  ng-click="gameOn.hello()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomHello</button>
+                <button id="goodbyeButton"  ng-click="gameOn.goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomGoodbye</button>
+                <button id="joinButton"  ng-click="gameOn.join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomJoin</button>
+                <button id="partButton" ng-click="gameOn.part()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomPart</button>
+                
+                <hr/>
+                <div class="container">
+                    <p>What next?</p>
+                    <ul>
+                        <li>Use the bottom half of this page for the equivalent of poking your room with a stick</li>
+                        <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
+                        <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
+                        <li>Scale your service -- does that change how you manage state?</li>
+                        <li>Check out other <a href="https://book.game-on.org/walkthroughs/createMore.html">Advanced Adventures</a>
+                            <li>Learn about the game's <a href="https://book.game-on.org/microservices/">Application architecture</a>
+                                </ul>
+                    <p> Go play! Game On!</p>
+                </div>
+
+                
             </div>
         </div>
-        <hr/>
-        <div class="container">
-            <p>What next?</p>
-            <ul>
-                <li>Use the bottom half of this page for the equivalent of poking your room with a stick</li>
-                <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
-                <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
-                <li>Scale your service -- does that change how you manage state?</li>
-                <li>Check out other <a href="https://book.game-on.org/walkthroughs/createMore.html">Advanced Adventures</a>
-                    <li>Learn about the game's <a href="https://book.game-on.org/microservices/">Application architecture</a>
-                        </ul>
-            <p> Go play! Game On!</p>
-        </div>
-        <script type="text/javascript" src="swiftRoomClient.js"></script>
     </body>
 </html>

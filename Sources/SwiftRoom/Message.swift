@@ -185,7 +185,7 @@ public class Message {
     }
     
     public static func createChatMessage(username: String, message: String) throws ->  Message {
-        //  player,*,{...}
+        //  room,*,{...}
         //  {
         //    "type": "chat",
         //    "username": "username",
@@ -202,7 +202,7 @@ public class Message {
         
         let payloadStr = try jsonToString(json: payload)
         
-        return try Message(target: Target.player, targetId: Constants.Message.all, payload: payloadStr)
+        return try Message(target: Target.room, targetId: Constants.Message.all, payload: payloadStr)
         
     }
     
