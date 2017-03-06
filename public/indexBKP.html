@@ -1,12 +1,12 @@
 <!--
  Copyright (c) 2017 IBM Corp.
- 
+
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
- 
+
  http://www.apache.org/licenses/LICENSE-2.0
- 
+
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,15 +20,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
         <link rel="stylesheet" href="css/styles.css"></link>
-        
+
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
-        
+
         <script type="text/javascript" src="gameOnSwift.js"></script>
         <!--        <script type="text/javascript" src="swiftRoomClient.js"></script>-->
-        
+
     </head>
     <body>
         <div class="container">
@@ -36,7 +36,7 @@
                 <h1>Your room is running! </h1>
                 <br/>
                 <h2>Test out your room... </h2>
-                
+
                 </br>
                 <button id="connectButton" onclick="connect()" class="btn btn-primary" type="button">Connect</button>
                 <button id="disconnectButton" onclick="disconnect()" class="btn btn-primary" type="button" disabled>Disconnect</button>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <input type="text" class="form-control textInput" id="inputMessage" placeholder="Type something and press ENTER, type 'clear' to clear" disabled>
-                
+
                 <br/>
                 <button id="helloButton"  onclick="hello()" disabled type="button" class="btn btn-primary">roomHello</button>
                 <button id="goodbyeButton"  onclick="goodbye()" disabled type="button" class="btn btn-primary">roomGoodbye</button>
@@ -76,11 +76,11 @@
                 <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
                 <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
                 <li>Scale your service -- does that change how you manage state?</li>
-                <li>Check out other <a href="https://book.game-on.org/walkthroughs/createMore.html">Advanced Adventures</a>
-                    <li>Learn about the game's <a href="https://book.game-on.org/microservices/">Application architecture</a>
+                <li>Check out other <a href="https://book.gameontext.org/walkthroughs/createMore.html">Advanced Adventures</a>
+                    <li>Learn about the game's <a href="https://book.gameontext.org/microservices/">Application architecture</a>
                         </ul>
             <p> Go play! Game On!</p>
         </div>
-        
+
     </body>
 </html>

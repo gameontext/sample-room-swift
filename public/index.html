@@ -7,7 +7,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"></link>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
-        
+
         <script src="gameOnSwift.js"></script>
         <link rel="stylesheet" href="css/styles.css" type="text/css" />
     </head>
@@ -18,7 +18,7 @@
                 <h1>Your room is running! </h1>
                 <br/>
                 <h2>Test out your room... </h2>
-                
+
                 </br>
                 <button id="connectButton" ng-click="gameOn.connect()" class="btn btn-primary" type="button" ng-disabled="gameOn.connected.value">Start chat</button>
                 <button id="disconnectButton" ng-click="gameOn.disconnect()" class="btn btn-primary" type="button" ng-disabled="!gameOn.connected.value">End chat</button>
@@ -26,7 +26,7 @@
             </div>
             <br/>
             <br/>
-            
+
             <div class="container">
                 <div class="row chat-window " id="chat_window_1" >
                     <div class="col-xs-12 col-md-12" >
@@ -38,7 +38,7 @@
                             </div>
                             <div class="panel-body msg_container_base setScroll" id="autoscroll">
                                 <div ng-repeat="m in gameOn.messages" >
-                                    
+
                                     <div class="row msg_container base_sent" ng-show="m.origin=='client'">
                                         <div class="col-md-10 col-xs-10">
                                             <div class="messages msg_sent">
@@ -50,7 +50,7 @@
                                             <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize "/>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row msg_container base_receive" ng-show="m.origin=='server'">
                                         <div class="col-md-2 col-xs-2 avatar">
                                             <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize img-receive-float"/>
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="panel-footer">
@@ -72,7 +72,7 @@
                                         <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="gameOn.evaluateInput()">Send</button>
                                     </span>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                 <button id="goodbyeButton"  ng-click="gameOn.goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomGoodbye</button>
                 <button id="joinButton"  ng-click="gameOn.join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomJoin</button>
                 <button id="partButton" ng-click="gameOn.part()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomPart</button>
-                
+
                 <hr/>
                 <div class="container">
                     <p>What next?</p>
@@ -91,13 +91,13 @@
                         <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
                         <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
                         <li>Scale your service -- does that change how you manage state?</li>
-                        <li>Check out other <a href="https://book.game-on.org/walkthroughs/createMore.html">Advanced Adventures</a>
-                            <li>Learn about the game's <a href="https://book.game-on.org/microservices/">Application architecture</a>
+                        <li>Check out other <a href="https://book.gameontext.org/walkthroughs/createMore.html">Advanced Adventures</a>
+                            <li>Learn about the game's <a href="https://book.gameontext.org/microservices/">Application architecture</a>
                                 </ul>
                     <p> Go play! Game On!</p>
                 </div>
 
-                
+
             </div>
         </div>
     </body>
