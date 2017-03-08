@@ -35,7 +35,7 @@ public class RoomEndpoint: WebSocketService {
     private var connections = [String: WebSocketConnection]()
 
     public init() {
-        roomImplementation.roomDescription.addInventoryItem(item: "counter")
+        //roomImplementation.roomDescription.addInventoryItem(item: "counter")
     }
 
     public func connected(connection: WebSocketConnection) {
@@ -67,6 +67,7 @@ public class RoomEndpoint: WebSocketService {
 
     public func received(message: Data, from: WebSocketConnection) {
         from.close(reason: .invalidDataType, description: "GameOn Swift room only accepts text messages")
+        connections.removeValue(forKey: from.id)
     }
 
     public func sendMessage(connection: WebSocketConnection, message: Message) {

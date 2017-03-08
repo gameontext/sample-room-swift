@@ -41,7 +41,7 @@ class RoomDelegate: ServerDelegate {
     }
 }
 
-// Add HTTP Server to listen on port 8090
+// Add HTTP Server to listen on port 8080
 let server = HTTP.createServer()
 server.delegate = RoomDelegate()
 
