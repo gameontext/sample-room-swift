@@ -166,9 +166,7 @@ public class Message {
         //      },
         //      "bookmark": "String representing last message seen"
         //  }
-        let payloadDict: [String: Any] = buildBroadcastContent(content: allContent, pairs: pairs)
-        
-        let payload = payloadDict.description
+        let payload: String = buildBroadcastContent(content: allContent, pairs: pairs)
         
         Log.info("creating broadcast event with payload: \(payload)")
         return try Message(target: Target.player, targetId: Constants.Message.all, payload: payload)
@@ -176,7 +174,7 @@ public class Message {
     }
     
     public static func createChatMessage(username: String, message: String) throws ->  Message {
-        //  room,*,{...}
+        //  player,*,{...}
         //  {
         //    "type": "chat",
         //    "username": "username",
@@ -195,7 +193,7 @@ public class Message {
         let payloadStr = try jsonToString(json: payload)
         Log.info("creating chat message with payload: \(payloadStr)")
         
-        return try Message(target: Target.room, targetId: Constants.Message.all, payload: payloadStr)
+        return try Message(target: Target.player, targetId: Constants.Message.all, payload: payloadStr)
         
     }
     
@@ -377,7 +375,7 @@ public class Message {
         return jsonString
     }
     
-    public static func buildBroadcastContent(content: String?, pairs: [String]?) -> [String: Any] {
+    public static func buildBroadcastContent(content: String?, pairs: [String]?) -> String {
         
         var dict: [String: Any] = [:]
         
@@ -401,7 +399,8 @@ public class Message {
         
         dict[Constants.Message.content] = message
         
-        return dict
+        return dict.description.replacingOccurrences(of: "[", with: "{").replacingOccurrences(of: "]", with: "}")
+      
     }
     
 }

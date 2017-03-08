@@ -22,7 +22,9 @@ import KituraWebSocket
 import LoggerAPI
 import SwiftRoom
 import Kitura
+import HeliumLogger
 
+HeliumLogger.use()
 
 WebSocket.register(service: RoomEndpoint(), onPath: "room")
 

@@ -16,6 +16,7 @@
 
 import Foundation
 import XCTest
+import SwiftyJSON
 
 @testable import SwiftRoom
 
@@ -64,9 +65,7 @@ class MessageCreationTests: XCTestCase {
         
         XCTAssert(messageStr.hasPrefix("player,*"))
         
-        let payload = message.payload
-        
-//        XCTAssert(payload.contains("\"content\":\"Just chatting\""))
+//        XCTAssert(payload.contains("\"bookmark\""))
         
         expectation1.fulfill()
         
@@ -75,7 +74,7 @@ class MessageCreationTests: XCTestCase {
     }
     
     func testChatMessage() throws {
-        //  room,*,{...}
+        //  player,*,{...}
         //  {
         //    "type": "chat",
         //    "username": "username",
@@ -90,7 +89,7 @@ class MessageCreationTests: XCTestCase {
         let messageStr = message.toString()
         print("** message: \(messageStr)")
         
-        XCTAssert(messageStr.hasPrefix("room,*,{"))
+        XCTAssert(messageStr.hasPrefix("player,*,{"))
         
         let payload = message.payload
         
