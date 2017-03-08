@@ -22,6 +22,9 @@ import KituraWebSocket
 import LoggerAPI
 import SwiftRoom
 import Kitura
+import HeliumLogger
+
+HeliumLogger.use()
 
 WebSocket.register(service: RoomEndpoint(), onPath: "room")
 
@@ -40,13 +43,13 @@ class RoomDelegate: ServerDelegate {
     }
 }
 
-// Add HTTP Server to listen on port 8090
+// Add HTTP Server to listen on port 8080
 let server = HTTP.createServer()
 server.delegate = RoomDelegate()
 
 
 do {
-    try server.listen(on: 8090)
+    try server.listen(on: 8080)
     ListenerGroup.waitForListeners()
 } catch {
     Log.error("Error listening on port 8080: \(error).")
