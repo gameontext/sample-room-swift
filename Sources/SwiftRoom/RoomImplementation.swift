@@ -18,7 +18,6 @@ import LoggerAPI
 import Foundation
 import KituraWebSocket
 import SwiftyJSON
-//import HeliumLogger
 
 public class RoomImplementation {
         
@@ -44,24 +43,19 @@ public class RoomImplementation {
                                      message: Message.createBroadcastEvent(
                                         allContent: Constants.Room.helloAll(name: username),
                                         pairs: [userId, Constants.Room.helloUser]))
-            
             break;
             
         case "roomJoin":
             
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
-            
             break;
             
         case "roomGoodbye":
-            
-            // Say goodbye to person leaving the room
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createBroadcastEvent(
                                     allContent: Constants.Room.goodbyeAll(name: username),
                                     pairs: [userId, Constants.Room.goodbyeUser] ))
-            
             break;
             
         case "roomPart":
@@ -69,7 +63,6 @@ public class RoomImplementation {
             break;
             
         case "room":
-            
             // This message will be either a command or a chat
             guard let payloadJSON = (message.payload).data(using: String.Encoding.utf8) else {
                 throw SwiftRoomError.errorInJSONProcessing
@@ -85,7 +78,6 @@ public class RoomImplementation {
                 try endpoint.sendMessage(connection: connection,
                                          message: Message.createChatMessage(username: username, message: content))
             }
-            
             break;
         default:
             Log.info("unknown message")
@@ -99,8 +91,6 @@ public class RoomImplementation {
         content: String,
         endpoint: RoomEndpoint,
         connection: WebSocketConnection) throws {
-        
-//        HeliumLogger.use()
         
         let contentTrimmed = content.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -120,11 +110,6 @@ public class RoomImplementation {
         }
         
         switch firstWord {
-        case "/heygirl":
-            
-            try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
-            break;
-            
         case "/increment":
             
             self.roomDescription.count += 1
@@ -135,8 +120,6 @@ public class RoomImplementation {
             if let remainder = remainder {
                 self.roomDescription.addInventoryItem(item: remainder)
             }
-            
-            Log.info("adding thing with remainder = \(remainder)")
             
             try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
             break;
@@ -202,8 +185,7 @@ public class RoomImplementation {
                                  message: Message.createBroadcastEvent(
                                     allContent: allContent,
                                     pairs: [userId, toUserId]))
-            
-           
+
             Log.info("/ping")
             break;
         

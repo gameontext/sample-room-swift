@@ -17,8 +17,6 @@
 import Foundation
 import LoggerAPI
 import KituraWebSocket
-//import Dispatch
-
 /**
  * This is the WebSocket endpoint for a room. varinstance of this class
  * will be created for every connected client.
@@ -30,12 +28,10 @@ public class RoomEndpoint: WebSocketService {
     
     private var roomImplementation: RoomImplementation = RoomImplementation()
     
-    //private let connectionsLock = DispatchSemaphore(value: 1)
-    
     private var connections = [String: WebSocketConnection]()
 
     public init() {
-        //roomImplementation.roomDescription.addInventoryItem(item: "counter")
+        roomImplementation.roomDescription.addInventoryItem(item: "counter")
     }
 
     public func connected(connection: WebSocketConnection) {
@@ -76,11 +72,4 @@ public class RoomEndpoint: WebSocketService {
         connection.send(message: message.toString())
     }
     
-//    private func lockConnectionsLock() {
-//        _ = connectionsLock.wait(timeout: DispatchTime.distantFuture)
-//    }
-//    
-//    private func unlockConnectionsLock() {
-//        connectionsLock.signal()
-//    }
 }

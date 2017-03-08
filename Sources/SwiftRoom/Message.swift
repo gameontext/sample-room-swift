@@ -60,11 +60,8 @@ public class Message {
     
     // Parse a string read from the WebSocket
     public init(message: String) throws {
-        /*
-         * Expected format:
-         *    target,targetId,{"json": "payload"}
-         */
-        // Extract target
+        // Expected format:
+        //    target,targetId,{"json": "payload"}
         
         guard let targetIndex = message.characters.index(of: ",") else {
             throw SwiftRoomError.invalidMessageFormat
