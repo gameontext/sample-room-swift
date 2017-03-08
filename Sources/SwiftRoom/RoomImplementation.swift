@@ -18,6 +18,7 @@ import LoggerAPI
 import Foundation
 import KituraWebSocket
 import SwiftyJSON
+//import HeliumLogger
 
 public class RoomImplementation {
         
@@ -99,6 +100,8 @@ public class RoomImplementation {
         endpoint: RoomEndpoint,
         connection: WebSocketConnection) throws {
         
+//        HeliumLogger.use()
+        
         let contentTrimmed = content.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
         let userId = message.userId ?? ""
@@ -132,6 +135,8 @@ public class RoomImplementation {
             if let remainder = remainder {
                 self.roomDescription.addInventoryItem(item: remainder)
             }
+            
+            Log.info("adding thing with remainder = \(remainder)")
             
             try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
             break;

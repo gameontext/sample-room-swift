@@ -16,10 +16,10 @@
 
 import Foundation
 import SwiftyJSON
-import HeliumLogger
 import LoggerAPI
 
 public class Message {
+    
     
     
     // The first segment in the WebSocket protocol for Game On!
@@ -65,6 +65,7 @@ public class Message {
          *    target,targetId,{"json": "payload"}
          */
         // Extract target
+        
         guard let targetIndex = message.characters.index(of: ",") else {
             throw SwiftRoomError.invalidMessageFormat
         }
@@ -165,11 +166,11 @@ public class Message {
         //      },
         //      "bookmark": "String representing last message seen"
         //  }
-        
         let payloadDict: [String: Any] = buildBroadcastContent(content: allContent, pairs: pairs)
         
         let payload = payloadDict.description
         
+        Log.info("creating broadcast event with payload: \(payload)")
         return try Message(target: Target.player, targetId: Constants.Message.all, payload: payload)
         
     }
@@ -183,6 +184,7 @@ public class Message {
         //    "bookmark": "String representing last message seen"
         //  }
         
+        
         let payload: JSON = [
             Constants.Message.type: Constants.Message.chat,
             Constants.Message.username: username,
@@ -191,6 +193,7 @@ public class Message {
         ]
         
         let payloadStr = try jsonToString(json: payload)
+        Log.info("creating chat message with payload: \(payloadStr)")
         
         return try Message(target: Target.room, targetId: Constants.Message.all, payload: payloadStr)
         

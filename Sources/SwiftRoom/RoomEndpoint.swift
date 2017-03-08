@@ -17,7 +17,7 @@
 import Foundation
 import LoggerAPI
 import KituraWebSocket
-import Dispatch
+//import Dispatch
 
 /**
  * This is the WebSocket endpoint for a room. varinstance of this class
@@ -26,10 +26,11 @@ import Dispatch
  */
 
 public class RoomEndpoint: WebSocketService {
-
+    
+    
     private var roomImplementation: RoomImplementation = RoomImplementation()
     
-    private let connectionsLock = DispatchSemaphore(value: 1)
+    //private let connectionsLock = DispatchSemaphore(value: 1)
     
     private var connections = [String: WebSocketConnection]()
 
@@ -38,29 +39,21 @@ public class RoomEndpoint: WebSocketService {
     }
 
     public func connected(connection: WebSocketConnection) {
-
         Log.info("A new connection has been made to the room.")
 
         connections[connection.id] = connection
-
         connection.send(message: Message.createAckMessage())
-
     }
 
     public func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {
-        
-//        lockConnectionsLock()
-        
         connections.removeValue(forKey: connection.id)
-        Log.info("A connection to the room has been closed with reason \(reason.code())")
         
-//        unlockConnectionsLock()
+        Log.info("A connection to the room has been closed with reason \(reason.code())")
     }
 
     public func received(message: String, from: WebSocketConnection) {
         print("server received message: \(message)")
         
-//        lockConnectionsLock()
         for (_, connection) in connections {
 
             do {
@@ -70,19 +63,16 @@ public class RoomEndpoint: WebSocketService {
                 Log.error("Error handling message in the room.")
             }
         }
-//        unlockConnectionsLock()
     }
 
     public func received(message: Data, from: WebSocketConnection) {
         from.close(reason: .invalidDataType, description: "GameOn Swift room only accepts text messages")
-        connections.removeValue(forKey: from.id)
     }
 
     public func sendMessage(connection: WebSocketConnection, message: Message) {
         print("server sending processed message to client: \(message.toString())")
-//        lockConnectionsLock()
+    
         connection.send(message: message.toString())
-//        unlockConnectionsLock()
     }
     
 //    private func lockConnectionsLock() {

@@ -44,9 +44,9 @@ app.controller('GameOnController', function($timeout, $window) {
                     websocket.onmessage = function(event) {
                         if ( websocket !== null ) {
                
-                            //var chatMessage = gameOn.extractChatMsg(event.data);
+                            var chatMessage = gameOn.extractChatMsg(event.data);
                
-                            //if ( chatMessage ){
+                            if ( chatMessage ){
                                 var username = gameOn.extractJson(event.data, "username");
                                 gameOn.messages.push({"origin": "server", "username":username, "content":event.data});
                
@@ -54,7 +54,7 @@ app.controller('GameOnController', function($timeout, $window) {
                                          var scroller = document.getElementById("autoscroll");
                                          scroller.scrollTop = scroller.scrollHeight;
                                          }, 0, false);
-                            //}
+                            }
                         }
 
                     };
@@ -73,9 +73,9 @@ app.controller('GameOnController', function($timeout, $window) {
                gameOn.send = function (payload) {
                     if ( websocket !== null ) {
                
-                        //var chatMessage = gameOn.extractChatMsg(payload);
+                        var chatMessage = gameOn.extractChatMsg(payload);
                
-                        //if ( chatMessage ){
+                        if ( chatMessage ){
                             var username = gameOn.extractJson(payload, "username");
                             gameOn.messages.push({"origin": "client", "username":username, "content":payload});
                
@@ -83,7 +83,7 @@ app.controller('GameOnController', function($timeout, $window) {
                                      var scroller = document.getElementById("autoscroll");
                                      scroller.scrollTop = scroller.scrollHeight;
                             }, 0, false);
-                        //}
+                        }
                
                         websocket.send(payload);
                     }
