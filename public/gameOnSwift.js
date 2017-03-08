@@ -7,7 +7,7 @@ app.controller('GameOnController', function($timeout, $window) {
                var websocket = null;
                var websocketUrl = "ws://" + window.document.location.host + "/room";
                
-               gameOn.messages = [];//{"origin":"client|server", "username":"user1","content":"Here's the first message"}];
+               gameOn.messages = [];
                
                gameOn.inputMessage = {value : ""};
                
@@ -61,7 +61,6 @@ app.controller('GameOnController', function($timeout, $window) {
                };
                
                gameOn.disconnect = function() {
-               alert("*********************disconnect")
                     gameOn.connected.value = false;
                     gameOn.messages = [];
                     if ( websocket !== null ) {
@@ -208,26 +207,24 @@ app.controller('GameOnController', function($timeout, $window) {
                 return null;
             }
             
-                                                                     $window.onbeforeunload = closingCode;
-                                                                     function closingCode(){
-                                                                     console.log("***********huh?")
-                                                                     gameOn.disconnect();
-                                                                     return null;
-                                                                     }
+            $window.onbeforeunload = closingCode;
+            function closingCode(){
+                gameOn.disconnect();
+                return null;
+            }
                                                                      
             gameOn.connect();
 });
                                                      
-                                                     app.directive('ngEnter', function () {
-                                                                   return function (scope, element, attrs) {
-                                                                   element.bind("keydown keypress", function (event) {
-                                                                                if (event.which === 13) {
-                                                                                scope.$apply(function () {
-                                                                                             scope.$eval(attrs.ngEnter);
-                                                                                             });
-                                                                                
-                                                                                event.preventDefault();
-                                                                                }
-                                                                                });
-                                                                   };
-                                                                   });
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                 scope.$apply(function () {
+                     scope.$eval(attrs.ngEnter);
+                 });
+                 event.preventDefault();
+             }
+         });
+    };
+});

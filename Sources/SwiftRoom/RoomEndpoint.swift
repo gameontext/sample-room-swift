@@ -18,7 +18,7 @@ import Foundation
 import LoggerAPI
 import KituraWebSocket
 /**
- * This is the WebSocket endpoint for a room. varinstance of this class
+ * This is the WebSocket endpoint for a room. An instance of this class
  * will be created for every connected client.
  * https://book.gameontext.org/microservices/WebSocketProtocol.html
  */
