@@ -21,7 +21,7 @@ import SwiftyJSON
 
 public class RoomImplementation {
         
-    let roomDescription = RoomDescription()
+    var roomDescription = RoomDescription()
     
     public func handleMessage(messageStr: String, endpoint: RoomEndpoint, connection: WebSocketConnection) throws {
         
@@ -117,6 +117,24 @@ public class RoomImplementation {
         }
         
         switch firstWord {
+        case "/heygirl":
+            
+            try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
+            break;
+            
+        case "/increment":
+            
+            self.roomDescription.count += 1
+            try endpoint.sendMessage(connection: connection, message: Message.createChatMessage(username: username, message: "Count has been incremented \(self.roomDescription.count)"))
+        break;
+        case "/addthing":
+            
+            if let remainder = remainder {
+                self.roomDescription.addInventoryItem(item: remainder)
+            }
+            
+            try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
+            break;
         case "/go":
             
             let exitId = getDirection(direction: remainder)
@@ -180,6 +198,7 @@ public class RoomImplementation {
                                     allContent: allContent,
                                     pairs: [userId, toUserId]))
             
+           
             Log.info("/ping")
             break;
         

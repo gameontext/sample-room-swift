@@ -17,19 +17,25 @@
 import Foundation
 import LoggerAPI
 import KituraWebSocket
+import Dispatch
+
 /**
- * This is the WebSocket endpoint for a room. An instance of this class
+ * This is the WebSocket endpoint for a room. varinstance of this class
  * will be created for every connected client.
  * https://book.gameontext.org/microservices/WebSocketProtocol.html
  */
 
 public class RoomEndpoint: WebSocketService {
 
-    private let roomImplementation: RoomImplementation = RoomImplementation()
-
+    private var roomImplementation: RoomImplementation = RoomImplementation()
+    
+    private let connectionsLock = DispatchSemaphore(value: 1)
+    
     private var connections = [String: WebSocketConnection]()
 
-    public init() {}
+    public init() {
+        roomImplementation.roomDescription.addInventoryItem(item: "counter")
+    }
 
     public func connected(connection: WebSocketConnection) {
 
@@ -42,14 +48,19 @@ public class RoomEndpoint: WebSocketService {
     }
 
     public func disconnected(connection: WebSocketConnection, reason: WebSocketCloseReasonCode) {
-
+        
+//        lockConnectionsLock()
+        
         connections.removeValue(forKey: connection.id)
         Log.info("A connection to the room has been closed with reason \(reason.code())")
-
+        
+//        unlockConnectionsLock()
     }
 
     public func received(message: String, from: WebSocketConnection) {
         print("server received message: \(message)")
+        
+//        lockConnectionsLock()
         for (_, connection) in connections {
 
             do {
@@ -59,6 +70,7 @@ public class RoomEndpoint: WebSocketService {
                 Log.error("Error handling message in the room.")
             }
         }
+//        unlockConnectionsLock()
     }
 
     public func received(message: Data, from: WebSocketConnection) {
@@ -68,7 +80,16 @@ public class RoomEndpoint: WebSocketService {
 
     public func sendMessage(connection: WebSocketConnection, message: Message) {
         print("server sending processed message to client: \(message.toString())")
+//        lockConnectionsLock()
         connection.send(message: message.toString())
-
+//        unlockConnectionsLock()
     }
+    
+//    private func lockConnectionsLock() {
+//        _ = connectionsLock.wait(timeout: DispatchTime.distantFuture)
+//    }
+//    
+//    private func unlockConnectionsLock() {
+//        connectionsLock.signal()
+//    }
 }

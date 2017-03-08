@@ -18,13 +18,15 @@ import LoggerAPI
 
 public struct RoomDescription {
 
-    var name = "nickName"
+    var name = "swiftRoom"
     
-    var fullName = "A room with no full name"
+    var fullName = "Swifty room"
     
-    var description = "Jennie's undescribed room"
+    var description = "A new swifty room"
     
     var inventory = [String]()
+    
+    var count = 0
     
     var commands = [String: String]()
     

@@ -1,6 +1,6 @@
 var app = angular.module('gameOnApp', [])
 
-app.controller('GameOnController', function($timeout) {
+app.controller('GameOnController', function($timeout, $window) {
                
                var gameOn = this;
                
@@ -20,8 +20,12 @@ app.controller('GameOnController', function($timeout) {
                gameOn.connect = function() {
                
                     gameOn.connected.value = true;
+                    console.log("url: "+websocketUrl)
+                    console.log("websocket: "+websocket)
                
                     websocket = new WebSocket(websocketUrl);
+                    console.log("new websocket: "+ websocket)
+                    if(websocket.connected)
                
                     websocket.onerror = function ( event ) {
                     if ( websocket !== null ) {
@@ -40,24 +44,26 @@ app.controller('GameOnController', function($timeout) {
                     websocket.onmessage = function(event) {
                         if ( websocket !== null ) {
                
-                            var chatMessage = gameOn.extractChatMsg(event.data);
+                            //var chatMessage = gameOn.extractChatMsg(event.data);
                
-                            if ( chatMessage ){
+                            //if ( chatMessage ){
                                 var username = gameOn.extractJson(event.data, "username");
-                                gameOn.messages.push({"origin": "server", "username":username, "content":chatMessage});
+                                gameOn.messages.push({"origin": "server", "username":username, "content":event.data});
                
                                 $timeout(function() {
                                          var scroller = document.getElementById("autoscroll");
                                          scroller.scrollTop = scroller.scrollHeight;
                                          }, 0, false);
-                            }
+                            //}
                         }
 
                     };
                };
                
                gameOn.disconnect = function() {
+               alert("*********************disconnect")
                     gameOn.connected.value = false;
+                    gameOn.messages = [];
                     if ( websocket !== null ) {
                         websocket.close();
                         websocket = null;
@@ -67,17 +73,17 @@ app.controller('GameOnController', function($timeout) {
                gameOn.send = function (payload) {
                     if ( websocket !== null ) {
                
-                        var chatMessage = gameOn.extractChatMsg(payload);
+                        //var chatMessage = gameOn.extractChatMsg(payload);
                
-                        if ( chatMessage ){
+                        //if ( chatMessage ){
                             var username = gameOn.extractJson(payload, "username");
-                            gameOn.messages.push({"origin": "client", "username":username, "content":chatMessage});
+                            gameOn.messages.push({"origin": "client", "username":username, "content":payload});
                
                             $timeout(function() {
                                      var scroller = document.getElementById("autoscroll");
                                      scroller.scrollTop = scroller.scrollHeight;
                             }, 0, false);
-                        }
+                        //}
                
                         websocket.send(payload);
                     }
@@ -201,6 +207,15 @@ app.controller('GameOnController', function($timeout) {
                    }
                 return null;
             }
+            
+                                                                     $window.onbeforeunload = closingCode;
+                                                                     function closingCode(){
+                                                                     console.log("***********huh?")
+                                                                     gameOn.disconnect();
+                                                                     return null;
+                                                                     }
+                                                                     
+            gameOn.connect();
 });
                                                      
                                                      app.directive('ngEnter', function () {

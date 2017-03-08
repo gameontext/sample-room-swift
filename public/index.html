@@ -20,8 +20,8 @@
                 <h2>Test out your room... </h2>
 
                 </br>
-                <button id="connectButton" ng-click="gameOn.connect()" class="btn btn-primary" type="button" ng-disabled="gameOn.connected.value">Start chat</button>
-                <button id="disconnectButton" ng-click="gameOn.disconnect()" class="btn btn-primary" type="button" ng-disabled="!gameOn.connected.value">End chat</button>
+<!--                <button id="connectButton" ng-click="gameOn.connect()" class="btn btn-primary" type="button" ng-disabled="gameOn.connected.value">Start chat</button>-->
+<!--                <button id="disconnectButton" ng-click="gameOn.disconnect()" class="btn btn-primary" type="button" ng-disabled="!gameOn.connected.value">End chat</button>-->
                 <br/>
             </div>
             <br/>
@@ -33,7 +33,7 @@
                         <div class="panel panel-default" >
                             <div class="panel-heading top-bar">
                                 <div class="col-md-8 col-xs-8">
-                                    <h3 class=""><span class="glyphicon glyphicon-comment"></span>GameOn! Swift chatroom</h3>
+                                    <h3 class=""><span class="glyphicon glyphicon-comment glyphSpacing"></span>     GameOn! Swift chatroom</h3>
                                 </div>
                             </div>
                             <div class="panel-body msg_container_base setScroll" id="autoscroll">
@@ -87,9 +87,9 @@
                 <div class="container">
                     <p>What next?</p>
                     <ul>
-                        <li>Use the bottom half of this page for the equivalent of poking your room with a stick</li>
+                        <li>Use the top half of this page for the equivalent of poking your room with a stick</li>
                         <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
-                        <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
+                        <li>Add custom commands and items to your room (see <code>Sources/SwiftRoom/RoomImplementation.swift</code>)</li>
                         <li>Scale your service -- does that change how you manage state?</li>
                         <li>Check out other <a href="https://book.gameontext.org/walkthroughs/createMore.html">Advanced Adventures</a>
                             <li>Learn about the game's <a href="https://book.gameontext.org/microservices/">Application architecture</a>
