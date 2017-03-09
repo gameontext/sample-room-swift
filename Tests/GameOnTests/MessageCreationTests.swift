@@ -16,6 +16,7 @@
 
 import Foundation
 import XCTest
+import SwiftyJSON
 
 @testable import SwiftRoom
 
@@ -23,13 +24,14 @@ class MessageCreationTests: XCTestCase {
     
     static var allTests: [(String, (MessageCreationTests) -> () throws -> Void )] {
         return [
-            ("testCreateChatMessage", testCreateChatMessage),
+            ("testChatMessage", testChatMessage),
             ("testBasicLocationMessage", testBasicLocationMessage),
             ("testDevelopedLocationMessage", testDevelopedLocationMessage),
-            ("testCreateEventMessage", testCreateEventMessage),
-            ("testCreatePlayerLocationMessage", testCreatePlayerLocationMessage),
-            ("testCreateMessageWithString", testCreateMessageWithString),
-            ("testCreateAckMessage", testCreateAckMessage)
+            ("testEventMessage", testEventMessage),
+            ("testPlayerLocationMessage", testPlayerLocationMessage),
+            ("testMessageWithString", testMessageWithString),
+            ("testAckMessage", testAckMessage),
+            ("testBroadcastMessage", testBroadcastMessage)
         ]
     }
     
@@ -42,22 +44,58 @@ class MessageCreationTests: XCTestCase {
         super.setUp()
     }
     
-    func testCreateChatMessage() throws {
+    func testBroadcastMessage() throws {
+        //  player,*,{
+        //      "type": "event",
+        //      "content": {
+        //          "*": "general text for everyone",
+        //          "<userId>": "specific to player"
+        //      },
+        //      "bookmark": "String representing last message seen"
+        //  }
+        
+        let expectation1 = expectation(description: "Create broadcast message")
+        
+        let content = "It's a broadcast!"
+        let pairs:[String] = ["user1", "hello user1", "user2", "hello user2"]
+        let message = try Message.createBroadcastEvent(allContent: content, pairs: pairs)
+        
+        let messageStr = message.toString()
+        print("** message: \(messageStr)")
+        
+        XCTAssert(messageStr.hasPrefix("player,*"))
+        
+//        XCTAssert(payload.contains("\"bookmark\""))
+        
+        expectation1.fulfill()
+        
+        waitForExpectations(timeout: 5, handler: { error in XCTAssertNil(error, "Timeout") })
+        
+    }
+    
+    func testChatMessage() throws {
+        //  player,*,{...}
+        //  {
+        //    "type": "chat",
+        //    "username": "username",
+        //    "content": "<message>",
+        //    "bookmark": "String representing last message seen"
+        //  }
        
         let expectation1 = expectation(description: "Create chat message")
 
-        let message = try Message.createRoomMessage(roomId: self.roomId, userId: self.userId, username: self.username, content: "Just chatting")
+        let message = try Message.createChatMessage(username: self.username, message: "Just chatting")
 
         let messageStr = message.toString()
         print("** message: \(messageStr)")
         
-        XCTAssert(messageStr.hasPrefix("room,\(self.roomId),{"))
+        XCTAssert(messageStr.hasPrefix("player,*,{"))
         
         let payload = message.payload
         
         XCTAssert(payload.contains("\"content\":\"Just chatting\""))
         XCTAssert(payload.contains("\"username\":\"" + self.username + "\""))
-        XCTAssert(payload.contains("\"userId\":\"" + self.userId + "\""))
+        XCTAssert(payload.contains("\"bookmark\":\"\(Constants.Message.prefix)"))
  
         expectation1.fulfill()
 
@@ -142,19 +180,19 @@ class MessageCreationTests: XCTestCase {
     }
 
     
-    func testCreateEventMessage() throws {
+    func testEventMessage() throws {
         
     }
     
-    func testCreatePlayerLocationMessage() throws {
+    func testPlayerLocationMessage() throws {
         
     }
     
-    func testCreateMessageWithString() throws {
+    func testMessageWithString() throws {
         
     }
     
-    func testCreateAckMessage() throws {
+    func testAckMessage() throws {
         
         let expectation1 = expectation(description: "Create ack message")
         

@@ -1,13 +1,13 @@
 var app = angular.module('gameOnApp', [])
 
-app.controller('GameOnController', function($timeout) {
+app.controller('GameOnController', function($timeout, $window) {
                
                var gameOn = this;
                
                var websocket = null;
                var websocketUrl = "ws://" + window.document.location.host + "/room";
                
-               gameOn.messages = [];//{"origin":"client|server", "username":"user1","content":"Here's the first message"}];
+               gameOn.messages = [];
                
                gameOn.inputMessage = {value : ""};
                
@@ -20,8 +20,12 @@ app.controller('GameOnController', function($timeout) {
                gameOn.connect = function() {
                
                     gameOn.connected.value = true;
+                    console.log("url: "+websocketUrl)
+                    console.log("websocket: "+websocket)
                
                     websocket = new WebSocket(websocketUrl);
+                    console.log("new websocket: "+ websocket)
+                    if(websocket.connected)
                
                     websocket.onerror = function ( event ) {
                     if ( websocket !== null ) {
@@ -44,7 +48,7 @@ app.controller('GameOnController', function($timeout) {
                
                             if ( chatMessage ){
                                 var username = gameOn.extractJson(event.data, "username");
-                                gameOn.messages.push({"origin": "server", "username":username, "content":chatMessage});
+                                gameOn.messages.push({"origin": "server", "username":username, "content":event.data});
                
                                 $timeout(function() {
                                          var scroller = document.getElementById("autoscroll");
@@ -58,6 +62,7 @@ app.controller('GameOnController', function($timeout) {
                
                gameOn.disconnect = function() {
                     gameOn.connected.value = false;
+                    gameOn.messages = [];
                     if ( websocket !== null ) {
                         websocket.close();
                         websocket = null;
@@ -71,7 +76,7 @@ app.controller('GameOnController', function($timeout) {
                
                         if ( chatMessage ){
                             var username = gameOn.extractJson(payload, "username");
-                            gameOn.messages.push({"origin": "client", "username":username, "content":chatMessage});
+                            gameOn.messages.push({"origin": "client", "username":username, "content":payload});
                
                             $timeout(function() {
                                      var scroller = document.getElementById("autoscroll");
@@ -201,18 +206,25 @@ app.controller('GameOnController', function($timeout) {
                    }
                 return null;
             }
+            
+            $window.onbeforeunload = closingCode;
+            function closingCode(){
+                gameOn.disconnect();
+                return null;
+            }
+                                                                     
+            gameOn.connect();
 });
                                                      
-                                                     app.directive('ngEnter', function () {
-                                                                   return function (scope, element, attrs) {
-                                                                   element.bind("keydown keypress", function (event) {
-                                                                                if (event.which === 13) {
-                                                                                scope.$apply(function () {
-                                                                                             scope.$eval(attrs.ngEnter);
-                                                                                             });
-                                                                                
-                                                                                event.preventDefault();
-                                                                                }
-                                                                                });
-                                                                   };
-                                                                   });
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                 scope.$apply(function () {
+                     scope.$eval(attrs.ngEnter);
+                 });
+                 event.preventDefault();
+             }
+         });
+    };
+});

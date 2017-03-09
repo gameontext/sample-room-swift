@@ -5,7 +5,7 @@ var BUILD_DIR = path.resolve(__dirname, 'public');
 var APP_DIR = path.resolve(__dirname, 'public');
 
 var config = {
-    entry: APP_DIR + '/swiftRoomClient.js',
+    entry: APP_DIR + '/gameOnSwift.js',
     output: {
         filename: 'js/bundle.js',
         path: BUILD_DIR
