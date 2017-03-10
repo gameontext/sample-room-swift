@@ -89,8 +89,8 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                             console.log("--> message from client: " + message);
                
                             var payload = gameOn.extractJsonPayload(message)
-               
-                            gameOn.messages.push({"origin": "client", "username":username, "content":payload});
+
+                            gameOn.messages.push({"origin": "client", "username":username, "content":JSON.stringify(payload, null, 4)});
                
                             $timeout(function() {
                                      var scroller = document.getElementById("autoscroll");
