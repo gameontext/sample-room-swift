@@ -40,9 +40,9 @@ app.controller('GameOnController', function($timeout) {
                     websocket.onmessage = function(event) {
                         if ( websocket !== null ) {
                
-                            var chatMessage = gameOn.extractChatMsg(event.data);
+                            //var chatMessage = gameOn.extractChatMsg(event.data);
                
-                            if ( chatMessage ){
+                            //if ( chatMessage ){
                                 var username = gameOn.extractJson(event.data, "username");
                                 gameOn.messages.push({"origin": "server", "username":username, "content":chatMessage});
                
@@ -50,7 +50,7 @@ app.controller('GameOnController', function($timeout) {
                                          var scroller = document.getElementById("autoscroll");
                                          scroller.scrollTop = scroller.scrollHeight;
                                          }, 0, false);
-                            }
+                            //}
                         }
 
                     };
@@ -113,7 +113,6 @@ app.controller('GameOnController', function($timeout) {
                         "userId": "dummyId",
                         "version": 2
                     };
-               
                     gameOn.send("roomHello," + roomId + "," + JSON.stringify(roomHello));
                };
                

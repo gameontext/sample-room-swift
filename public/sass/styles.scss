@@ -24,7 +24,7 @@ border-radius: 0px !important;
 }*/
 
 .img-resize {
-max-width: 50%;
+//max-width: 50%;
 }
 
 .img-receive-float {
@@ -40,6 +40,25 @@ margin-bottom: 10px;
 
 .setScroll {
 overflow-y: scroll;
+}
+
+.glyphSpacing {
+top : 5px;
+}
+
+.chatContainer {
+max-width: 800px;
+}
+
+.padding0 {
+padding: 0px;
+}
+
+.paddingR0 {
+padding-right: 0px;
+}
+.paddingL0 {
+padding-left: 0px;
 }
 
 /* like hangout chat */
@@ -112,6 +131,10 @@ width: 100%;
 .avatar {
 position: relative;
 }
+
+.base_receive {
+padding-left: 20px;
+}
 .base_receive > .avatar:after {
 content: "";
 position: absolute;
@@ -127,6 +150,7 @@ border-bottom-color: rgba(0, 0, 0, 0);
 .base_sent {
 justify-content: flex-end;
 align-items: flex-end;
+padding-right: 20px;
 }
 .base_sent > .avatar:after {
 content: "";
