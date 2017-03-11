@@ -1,14 +1,13 @@
 var app = angular.module('gameOnApp', [])
 
-app.controller('GameOnController', function($timeout) {
+app.controller('GameOnController', function($timeout, $window, $scope) {
                
                var gameOn = this;
                
                var websocket = null;
                var websocketUrl = "ws://" + window.document.location.host + "/room";
                
-               gameOn.messages = [];//{"origin":"client|server", "username":"user1","content":"Here's the first message"}];
-               
+               gameOn.messages = [];
                gameOn.inputMessage = {value : ""};
                
                gameOn.connected = {value :false};
@@ -20,8 +19,11 @@ app.controller('GameOnController', function($timeout) {
                gameOn.connect = function() {
                
                     gameOn.connected.value = true;
+                    console.log("url: "+websocketUrl);
+                    console.log("websocket: "+websocket);
                
                     websocket = new WebSocket(websocketUrl);
+                    console.log("new websocket: "+ websocket);
                
                     websocket.onerror = function ( event ) {
                     if ( websocket !== null ) {
@@ -38,49 +40,70 @@ app.controller('GameOnController', function($timeout) {
                     };
                
                     websocket.onmessage = function(event) {
-                        if ( websocket !== null ) {
+                        if ( websocket !== null && gameOn.messageNotAck(event.data)) {
+                            console.log("<-- message from server: " + event.data);
+               
+                            // If integrating with Watson's Conversation service, extract the
+                            // chat message from the payload and push that to the messages object.
+                            // No need to do the pretty printing in that case.
                
                             //var chatMessage = gameOn.extractChatMsg(event.data);
-               
                             //if ( chatMessage ){
-                                var username = gameOn.extractJson(event.data, "username");
-                                gameOn.messages.push({"origin": "server", "username":username, "content":chatMessage});
                
-                                $timeout(function() {
-                                         var scroller = document.getElementById("autoscroll");
-                                         scroller.scrollTop = scroller.scrollHeight;
-                                         }, 0, false);
+                            var username = gameOn.extractJsonElement(event.data, "username");
+               
+                            var payload = gameOn.extractJsonPayload(event.data)
+               
+                            gameOn.messages.push({"origin": "server", "username":username, "content":JSON.stringify(payload, null, 4)});
+                            $scope.$apply();
+                            $timeout(function() {
+                                var scroller = document.getElementById("autoscroll");
+                                scroller.scrollTop = scroller.scrollHeight;
+                            }, 0, false);
                             //}
                         }
-
                     };
                };
                
                gameOn.disconnect = function() {
                     gameOn.connected.value = false;
+                    gameOn.messages = [];
                     if ( websocket !== null ) {
                         websocket.close();
                         websocket = null;
                     }
                };
                
-               gameOn.send = function (payload) {
+               gameOn.send = function (message) {
                     if ( websocket !== null ) {
                
-                        var chatMessage = gameOn.extractChatMsg(payload);
+                        // If integrating with Watson's Conversation service, extract the
+                        // chat message from the payload and push that to the messages object.
+                        // No need to do the pretty printing in that case.
                
-                        if ( chatMessage ){
-                            var username = gameOn.extractJson(payload, "username");
-                            gameOn.messages.push({"origin": "client", "username":username, "content":chatMessage});
+                        //var chatMessage = gameOn.extractChatMsg(message);
+                        //if ( chatMessage ){
+               
+                            var username = gameOn.extractJsonElement(message, "username");
+                            console.log("--> message from client: " + message);
+               
+                            var payload = gameOn.extractJsonPayload(message)
+
+                            gameOn.messages.push({"origin": "client", "username":username, "content":JSON.stringify(payload, null, 4)});
                
                             $timeout(function() {
                                      var scroller = document.getElementById("autoscroll");
                                      scroller.scrollTop = scroller.scrollHeight;
                             }, 0, false);
-                        }
+                        //}
                
-                        websocket.send(payload);
+                        websocket.send(message);
                     }
+               };
+               
+               gameOn.messageNotAck = function (message) {
+               
+                    return !message.startsWith("ack")
                };
                
                gameOn.evaluateInput = function () {
@@ -157,7 +180,13 @@ app.controller('GameOnController', function($timeout) {
                     gameOn.send("roomPart," + roomId.value + "," + JSON.stringify(roomPart));
                };
                
-               gameOn.extractJson = function (str, element) {
+               gameOn.extractJsonPayload = function (str) {
+               
+                    var payload = str.substring(str.indexOf("{"));
+                    return JSON.parse(payload)
+               }
+               
+               gameOn.extractJsonElement = function (str, element) {
                
                     var arr = str.split(",")
                
@@ -200,18 +229,26 @@ app.controller('GameOnController', function($timeout) {
                    }
                 return null;
             }
+                                                                     
+            $window.onbeforeunload = closingCode;
+            
+            function closingCode(){
+                gameOn.disconnect();
+                return null;
+            }
+                                                                     
+            gameOn.connect();
 });
                                                      
-                                                     app.directive('ngEnter', function () {
-                                                                   return function (scope, element, attrs) {
-                                                                   element.bind("keydown keypress", function (event) {
-                                                                                if (event.which === 13) {
-                                                                                scope.$apply(function () {
-                                                                                             scope.$eval(attrs.ngEnter);
-                                                                                             });
-                                                                                
-                                                                                event.preventDefault();
-                                                                                }
-                                                                                });
-                                                                   };
-                                                                   });
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter);
+                });
+                event.preventDefault();
+            }
+        });
+    };
+});

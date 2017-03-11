@@ -2,7 +2,7 @@
   "name": "GameOn",
   "version": "1.0.0",
   "description": "GameOn! room implemented in Swift",
-  "main": "swiftRoomClient.js",
+  "main": "gameOnSwift.js",
   "engines": {
     "node": ">=0.8.0"
   },

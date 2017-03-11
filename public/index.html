@@ -29,33 +29,33 @@
                         <div class="panel panel-default" >
                             <div class="panel-heading top-bar">
                                 <div class="col-md-8 col-xs-8">
-                                    <h3 class=""><span class="glyphicon glyphicon-comment glyphSpacing"></span>GameOn! Swift chatroom</h3>
+                                    <h3 class=""><span class="glyphicon glyphicon-comment glyphSpacing"></span>   GameOn! Swift chatroom</h3>
                                 </div>
                             </div>
                             <div class="panel-body msg_container_base setScroll" id="autoscroll">
-                                <div ng-repeat="m in gameOn.messages" >
+                                <div ng-model="gameOn.messages" ng-repeat="m in gameOn.messages" >
 
                                     <div class="row msg_container base_sent" ng-show="m.origin=='client'">
                                         <div class="col-md-11 col-xs-11 paddingR0">
-                                            <div class="messages msg_sent">
+                                            <pre class="messages">
                                                 <p>{{m.content}}</p>
-                                                <time>{{m.username}}</time>
-                                            </div>
+                                                <time class="floatR">{{m.origin}}</time>
+                                            </pre>
                                         </div>
                                         <div class="col-md-1 col-xs-1 avatar padding0">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize "/>
+                                            <img ng-src="img/client.png" class="img-resize "/>
                                         </div>
                                     </div>
 
                                     <div class="row msg_container base_receive" ng-show="m.origin=='server'">
                                         <div class="col-md-1 col-xs-1 avatar padding0">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize img-receive-float"/>
+                                            <img ng-src='img/kitura.jpg' class="img-resize img-receive-float"/>
                                         </div>
                                         <div class="col-md-11 col-xs-11 paddingL0">
-                                            <div class="messages msg_receive">
+                                            <pre class="messages">
                                                 <p>{{m.content}}</p>
-                                                <time>{{m.username}}</time>
-                                            </div>
+                                                <time class="floatL">{{m.origin}}</time>
+                                            </pre>
                                         </div>
                                     </div>
 
@@ -83,7 +83,7 @@
                 <div class="container">
                     <p>What next?</p>
                     <ul>
-                        <li>Use the bottom half of this page for the equivalent of poking your room with a stick</li>
+                        <li>Use the top half of this page for the equivalent of poking your room with a stick</li>
                         <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
                         <li>Add custom commands and items to your room (see <code>gameontext/SwiftRoom/RoomImplementation.swift</code>)</li>
                         <li>Scale your service -- does that change how you manage state?</li>
