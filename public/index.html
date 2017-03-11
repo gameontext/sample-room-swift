@@ -37,24 +37,24 @@
 
                                     <div class="row msg_container base_sent" ng-show="m.origin=='client'">
                                         <div class="col-md-11 col-xs-11 paddingR0">
-                                            <pre class="messages msg_sent">
+                                            <pre class="messages">
                                                 <p>{{m.content}}</p>
-                                                <time>{{m.username}}</time>
+                                                <time class="floatR">{{m.origin}}</time>
                                             </pre>
                                         </div>
                                         <div class="col-md-1 col-xs-1 avatar padding0">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize "/>
+                                            <img ng-src="img/client.png" class="img-resize "/>
                                         </div>
                                     </div>
 
                                     <div class="row msg_container base_receive" ng-show="m.origin=='server'">
                                         <div class="col-md-1 col-xs-1 avatar padding0">
-                                            <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-resize img-receive-float"/>
+                                            <img ng-src='img/kitura.jpg' class="img-resize img-receive-float"/>
                                         </div>
                                         <div class="col-md-11 col-xs-11 paddingL0">
-                                            <pre class="messages msg_receive">
+                                            <pre class="messages">
                                                 <p>{{m.content}}</p>
-                                                <time>{{m.username}}</time>
+                                                <time class="floatL">{{m.origin}}</time>
                                             </pre>
                                         </div>
                                     </div>

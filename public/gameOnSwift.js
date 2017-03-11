@@ -40,7 +40,7 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                     };
                
                     websocket.onmessage = function(event) {
-                        if ( websocket !== null ) {
+                        if ( websocket !== null && gameOn.messageNotAck(event.data)) {
                             console.log("<-- message from server: " + event.data);
                
                             // If integrating with Watson's Conversation service, extract the
@@ -62,7 +62,6 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                             }, 0, false);
                             //}
                         }
-
                     };
                };
                
@@ -100,6 +99,11 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                
                         websocket.send(message);
                     }
+               };
+               
+               gameOn.messageNotAck = function (message) {
+               
+                    return !message.startsWith("ack")
                };
                
                gameOn.evaluateInput = function () {
