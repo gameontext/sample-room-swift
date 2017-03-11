@@ -16,8 +16,10 @@
 
 import Foundation
 import SwiftyJSON
+import LoggerAPI
 
 public class Message {
+    
     
     
     // The first segment in the WebSocket protocol for Game On!
@@ -58,11 +60,9 @@ public class Message {
     
     // Parse a string read from the WebSocket
     public init(message: String) throws {
-        /*
-         * Expected format:
-         *    target,targetId,{"json": "payload"}
-         */
-        // Extract target
+        // Expected format:
+        //    target,targetId,{"json": "payload"}
+        
         guard let targetIndex = message.characters.index(of: ",") else {
             throw SwiftRoomError.invalidMessageFormat
         }
@@ -76,7 +76,7 @@ public class Message {
         self.target = targetVal
         
         var remaining = message.substring(from: targetIndex).trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         // remaining = `,targetId,{"json": "payload"}`. Now remove the ','
         remaining.remove(at: remaining.startIndex)
         
@@ -84,14 +84,14 @@ public class Message {
         guard let targetIdIndex = remaining.characters.index(of: ",") else {
             throw SwiftRoomError.invalidMessageFormat
         }
-
+        
         self.targetId = remaining.substring(to: targetIdIndex)
         
         // Extract JSON
         guard let jsonIndex = remaining.characters.index(of: "{") else {
             throw SwiftRoomError.invalidMessageFormat
         }
-
+        
         self.payload = remaining.substring(from: jsonIndex)
         
         guard let payloadJSON = payload.data(using: String.Encoding.utf8) else {
@@ -163,35 +163,22 @@ public class Message {
         //      },
         //      "bookmark": "String representing last message seen"
         //  }
-                
-        let contentStr: String = buildBroadcastContent(content: allContent, pairs: pairs)
-    
-        guard let contentData = contentStr.data(using: String.Encoding.utf8) else {
-            throw SwiftRoomError.errorInJSONProcessing
-        }
+        let payload: String = buildBroadcastContent(content: allContent, pairs: pairs)
         
-        let contentJSON = JSON(data: contentData)
-
-        let payload: JSON = [
-            Constants.Message.type: Constants.Message.event,
-            Constants.Message.content: contentJSON.object,
-            Constants.Message.bookmark: Constants.Message.prefix + uniqueStr()
-        ]
-        
-        let payloadStr = try jsonToString(json: payload)
-        
-        return try Message(target: Target.player, targetId: Constants.Message.all, payload: payloadStr)
+        Log.info("creating broadcast event with payload: \(payload)")
+        return try Message(target: Target.player, targetId: Constants.Message.all, payload: payload)
         
     }
     
     public static func createChatMessage(username: String, message: String) throws ->  Message {
-        //  room,*,{...}
+        //  player,*,{...}
         //  {
         //    "type": "chat",
         //    "username": "username",
         //    "content": "<message>",
         //    "bookmark": "String representing last message seen"
         //  }
+        
         
         let payload: JSON = [
             Constants.Message.type: Constants.Message.chat,
@@ -201,8 +188,9 @@ public class Message {
         ]
         
         let payloadStr = try jsonToString(json: payload)
+        Log.info("creating chat message with payload: \(payloadStr)")
         
-        return try Message(target: Target.room, targetId: Constants.Message.all, payload: payloadStr)
+        return try Message(target: Target.player, targetId: Constants.Message.all, payload: payloadStr)
         
     }
     
@@ -362,7 +350,7 @@ public class Message {
         
         return try Message(target: Target.roomPart, targetId: roomId, payload: payloadStr)
     }
-        
+    
     public func toString() -> String {
         
         return self.target.rawValue + "," + targetId + "," + payload
@@ -386,28 +374,30 @@ public class Message {
     
     public static func buildBroadcastContent(content: String?, pairs: [String]?) -> String {
         
-        var contentStr: String = "{"
+        var dict: [String: Any] = [:]
+        
+        dict[Constants.Message.type] = Constants.Message.event
+        dict[Constants.Message.bookmark] = Constants.Message.prefix + uniqueStr()
+        
+        var message: [String: String] = [:]
         
         if let content = content {
-            contentStr += Constants.Message.all + ": \(content)"
+            message[Constants.Message.all] = content
         }
         
         // only add additional messages if there is an even number
         if let pairs = pairs, (pairs.count % 2) == 0 {
             
             for i in stride(from:0, through: pairs.count-1, by: 2) {
-                
-                if(i != 0 ) {
-                    contentStr += ","
-                }
-                
-                contentStr += pairs[i] + ":" + pairs[i+1]
+                message[pairs[i]] = pairs[i+1]
                 
             }
         }
         
-        return contentStr + "}"
+        dict[Constants.Message.content] = message
         
+        return dict.description.replacingOccurrences(of: "[", with: "{").replacingOccurrences(of: "]", with: "}")
+      
     }
     
 }

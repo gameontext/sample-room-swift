@@ -21,7 +21,7 @@ import SwiftyJSON
 
 public class RoomImplementation {
         
-    let roomDescription = RoomDescription()
+    var roomDescription = RoomDescription()
     
     public func handleMessage(messageStr: String, endpoint: RoomEndpoint, connection: WebSocketConnection) throws {
         
@@ -43,24 +43,19 @@ public class RoomImplementation {
                                      message: Message.createBroadcastEvent(
                                         allContent: Constants.Room.helloAll(name: username),
                                         pairs: [userId, Constants.Room.helloUser]))
-            
             break;
             
         case "roomJoin":
             
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
-            
             break;
             
         case "roomGoodbye":
-            
-            // Say goodbye to person leaving the room
             try endpoint.sendMessage(connection: connection,
                                  message: Message.createBroadcastEvent(
                                     allContent: Constants.Room.goodbyeAll(name: username),
                                     pairs: [userId, Constants.Room.goodbyeUser] ))
-            
             break;
             
         case "roomPart":
@@ -68,7 +63,6 @@ public class RoomImplementation {
             break;
             
         case "room":
-            
             // This message will be either a command or a chat
             guard let payloadJSON = (message.payload).data(using: String.Encoding.utf8) else {
                 throw SwiftRoomError.errorInJSONProcessing
@@ -84,7 +78,6 @@ public class RoomImplementation {
                 try endpoint.sendMessage(connection: connection,
                                          message: Message.createChatMessage(username: username, message: content))
             }
-            
             break;
         default:
             Log.info("unknown message")
@@ -117,6 +110,19 @@ public class RoomImplementation {
         }
         
         switch firstWord {
+        case "/increment":
+            
+            self.roomDescription.count += 1
+            try endpoint.sendMessage(connection: connection, message: Message.createChatMessage(username: username, message: "Count has been incremented \(self.roomDescription.count)"))
+        break;
+        case "/addthing":
+            
+            if let remainder = remainder {
+                self.roomDescription.addInventoryItem(item: remainder)
+            }
+            
+            try endpoint.sendMessage(connection: connection, message: Message.createLocationMessage(userId: userId, roomDescription: self.roomDescription))
+            break;
         case "/go":
             
             let exitId = getDirection(direction: remainder)
@@ -179,7 +185,7 @@ public class RoomImplementation {
                                  message: Message.createBroadcastEvent(
                                     allContent: allContent,
                                     pairs: [userId, toUserId]))
-            
+
             Log.info("/ping")
             break;
         

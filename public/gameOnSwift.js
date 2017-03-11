@@ -8,6 +8,7 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                var websocketUrl = "ws://" + window.document.location.host + "/room";
                
                gameOn.messages = [];
+
                gameOn.inputMessage = {value : ""};
                
                gameOn.connected = {value :false};
@@ -19,11 +20,12 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                gameOn.connect = function() {
                
                     gameOn.connected.value = true;
-                    console.log("url: "+websocketUrl);
-                    console.log("websocket: "+websocket);
+                    console.log("url: "+websocketUrl)
+                    console.log("websocket: "+websocket)
                
                     websocket = new WebSocket(websocketUrl);
-                    console.log("new websocket: "+ websocket);
+                    console.log("new websocket: "+ websocket)
+                    if(websocket.connected)
                
                     websocket.onerror = function ( event ) {
                     if ( websocket !== null ) {
@@ -229,9 +231,8 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                    }
                 return null;
             }
-                                                                     
-            $window.onbeforeunload = closingCode;
             
+            $window.onbeforeunload = closingCode;
             function closingCode(){
                 gameOn.disconnect();
                 return null;
@@ -244,11 +245,11 @@ app.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if (event.which === 13) {
-                scope.$apply(function () {
-                    scope.$eval(attrs.ngEnter);
-                });
-                event.preventDefault();
-            }
-        });
+                 scope.$apply(function () {
+                     scope.$eval(attrs.ngEnter);
+                 });
+                 event.preventDefault();
+             }
+         });
     };
 });
