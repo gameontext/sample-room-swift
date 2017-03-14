@@ -10,7 +10,7 @@ var child = require('child_process');
 var server = null;
 
 gulp.task('sass', function() {
-    return gulp.src('./public/sass/*.scss')
+    return gulp.src('./client/assets/sass/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'))
 	.pipe(browserSync.reload({
@@ -34,9 +34,8 @@ gulp.task('webpack', function() {
 
 gulp.task('develop', ['webpack','compile:swift','run:server','watch']);
 
-//Watch task
 gulp.task('watch', ['browserSync', 'sass'], function() {
-    gulp.watch('./public/sass/*.scss',['sass']);
+    gulp.watch('./client/sass/*.scss',['sass']);
     gulp.watch('./Sources/**/*.swift', ['compile:swift','run:server']);
     gulp.watch('./public/*.js', ['webpack'])
 });
@@ -45,6 +44,16 @@ gulp.task('compile:swift', function() {
     return child.spawnSync('swift', ['build'], {
         cwd: '.'
     })
+});
+
+gulp.task('index', function() {
+    return gulp.src('./client/index.html')
+        .pipe(gulp.dest('public/'))
+});
+
+gulp.task('img', function() {
+    return gulp.src('./client/assets/img/*')
+        .pipe(gulp.dest('public/img/'))
 });
 
 gulp.task('run:server', function() {
@@ -58,4 +67,4 @@ gulp.task('run:server', function() {
         });
 });
 
-gulp.task('default', ['webpack','sass','compile:swift']);
+gulp.task('default', ['img', 'index', 'webpack','sass','compile:swift']);

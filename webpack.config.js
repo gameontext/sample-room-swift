@@ -2,7 +2,7 @@ var path = require('path');
 const webpack = require('webpack');
 
 var BUILD_DIR = path.resolve(__dirname, 'public');
-var APP_DIR = path.resolve(__dirname, 'public');
+var APP_DIR = path.resolve(__dirname, 'client/app');
 
 var config = {
     entry: APP_DIR + '/gameOnSwift.js',
@@ -11,19 +11,38 @@ var config = {
         path: BUILD_DIR
     },
     module : {
-        loaders : []
-    },
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true, 
-            beautify: false,
-            compress: {
-                screw_ie8: true,
-                warnings: false 
+        loaders : [
+            {
+                test    : /\.jsx?/,
+                include : APP_DIR,
+                loader  : 'babel-loader'
             },
-            comments: false
-        })
-    ]
+            {
+                test: /\.scss$/,
+                loader: 'style!css!sass'
+            },
+            { 
+                test: /\.css$/, 
+                loader: "style-loader!css-loader" 
+            },
+            {
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url?limit=10000&mimetype=application/font-woff'
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url?limit=10000&mimetype=application/octet-stream'
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'file'
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+                loader: 'url?limit=10000&mimetype=image/svg+xml'
+            }
+        ]
+    }
 };
 
 module.exports = config;
