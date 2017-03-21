@@ -194,7 +194,7 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                
                     for(var i in arr) {
                
-                        if(arr[i].indexOf(element) != -1) {
+                        if(arr[i].indexOf(element) !== -1) {
                
                             var contentArray = arr[i].split(":")
                
@@ -207,36 +207,36 @@ app.controller('GameOnController', function($timeout, $window, $scope) {
                };
                                                      
                gameOn.extractChatMsg = function (str) {
-                    if ( str.indexOf("room") == 0 ) {
-                                                     
+                    if ( str.indexOf("room") === 0 ) {                                                                  
                        var arr = str.split(",")
-                                                     
+                                                                  
                        for(var i in arr) {
-                                                     
-                           if(arr[i].indexOf("content") != -1) {
-                                                     
+                                                                  
+                           if(arr[i].indexOf("content") !== -1) {
+                                                                  
                                var contentArray = arr[i].split(":")
-                                                     
+                                                                  
                                //strip first char-- quotation mark
                                var content = contentArray[1].replace(/\"/g, "")
-                                                                                           
-                               if(content.charAt(0) != "/") {
-                                                                                           
-                                  var chat = content.replace("/", "");
-                                  chat = chat.replace("}", "");
-                                  return chat;
+                                                                                                        
+                               if(content.charAt(0) !== "/") {
+                                                                                                        
+                                   var chat = content.replace("/", "");
+                                   chat = chat.replace("}", "");
+                                   return chat;
                                }
                            }
-                      }
+                       }
                    }
-                return null;
-            }
-            
-            $window.onbeforeunload = closingCode;
+                   return null;
+              }
+                                                                     
             function closingCode(){
                 gameOn.disconnect();
                 return null;
             }
+
+            $window.onbeforeunload = closingCode;
                                                                      
             gameOn.connect();
 });
