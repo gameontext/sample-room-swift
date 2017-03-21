@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gameontext/sample-room-swift.svg?branch=master)](https://travis-ci.org/gameontext/sample-room-swift)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4d099084aab34a57893e8fd29df79ae3)](https://www.codacy.com/app/gameontext/sample-room-swift?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gameontext/sample-room-swift&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a4f822b212774508a835912f69e544d9)](https://www.codacy.com/app/jkingoliver/sample-room-swift?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gameontext/sample-room-swift&amp;utm_campaign=Badge_Grade)
 
 [Game On!](https://gameontext.org/) is both a sample microservices application, and a throwback text adventure brought to you by the WASdev team at IBM. This application demonstrates how microservice architectures work from two points of view:
 
