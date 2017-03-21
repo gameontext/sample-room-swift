@@ -32,12 +32,13 @@ gulp.task('webpack', function() {
           .pipe(gulp.dest('./public/'));
           });
 
-gulp.task('develop', ['webpack','compile:swift','run:server','watch']);
+gulp.task('develop', ['img','index','sass','webpack','compile:swift','run:server','watch']);
 
 gulp.task('watch', ['browserSync', 'sass'], function() {
     gulp.watch('./client/sass/*.scss',['sass']);
     gulp.watch('./Sources/**/*.swift', ['compile:swift','run:server']);
-    gulp.watch('./public/*.js', ['webpack'])
+    gulp.watch('./public/*.js', ['webpack']);
+    gulp.watch('./client/index.html',['index']);
 });
 
 gulp.task('compile:swift', function() {

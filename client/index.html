@@ -20,9 +20,6 @@
                 <h2>Test out your room... </h2>
                 <br/>
             </div>
-            <br/>
-            <br/>
-
             <div class="container chatContainer">
                 <div class="row chat-window " id="chat_window_1" >
                     <div class="col-xs-12 col-md-12" >
@@ -74,14 +71,13 @@
                     </div>
                 </div>
                 </br></br>
-                <button id="helloButton"  ng-click="gameOn.hello()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomHello</button>
-                <button id="goodbyeButton"  ng-click="gameOn.goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomGoodbye</button>
-                <button id="joinButton"  ng-click="gameOn.join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomJoin</button>
-                <button id="partButton" ng-click="gameOn.part()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">roomPart</button>
-
+                <h4>Poke your room with a test message:</h4>
+                <button id="helloButton"  ng-click="gameOn.hello()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">Hello room</button>
+                <button id="goodbyeButton"  ng-click="gameOn.goodbye()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">Goodbye room</button>
+                <button id="joinButton"  ng-click="gameOn.join()" ng-disabled="!gameOn.connected.value" type="button" class="btn btn-primary">Join room</button>
                 <hr/>
                 <div class="container">
-                    <p>What next?</p>
+                    <h4>What next?</h4>
                     <ul>
                         <li>Use the top half of this page for the equivalent of poking your room with a stick</li>
                         <li>Use the <code>/listmyrooms</code> command in First Room to find your live room in the game</li>
@@ -90,10 +86,8 @@
                         <li>Check out other <a href="https://book.gameontext.org/walkthroughs/createMore.html">Advanced Adventures</a>
                             <li>Learn about the game's <a href="https://book.gameontext.org/microservices/">Application architecture</a>
                                 </ul>
-                    <p> Go play! Game On!</p>
+                    <h4>Go play! Game On!</h4>
                 </div>
-
-
             </div>
         </div>
     </body>
