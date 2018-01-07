@@ -60,7 +60,7 @@ For Game On! to include your room, you need to tell it where the publicly reacha
 
 Creating a Docker image is straight-up: `docker build .` right from the root menu.
 
-A `docker-compose.yml` file is also there, which can be used to specify overlay volumes to allow local development without restarting the container. See the [Advanced Adventure for local development with Docker](https://book.gameontext.org/v/walkthrough/walkthroughs/local-docker.html) for a more detailed walkthrough.
+A `docker-compose.yml` file is also there, which can be used to specify overlay volumes to allow local development without restarting the container. See the [Advanced Adventure for local development with Docker](https://book.gameontext.org/walkthroughs/local-docker.html) for a more detailed walkthrough.
 
 ## Ok. So this thing is running... Now what?
 
@@ -91,7 +91,7 @@ Things you might try:
 * Use ??? to manage all of the connected WebSockets together as one event stream.
 * Call out to another API (Watson API, Weather API) to perform actions in the room.
 * Integrate this room with IFTTT, or Slack, or ...
-* .. other [Advanced Adventures](https://book.gameontext.org/v/walkthrough/walkthroughs/createMore.html)!
+* .. other [Advanced Adventures](https://book.gameontext.org/walkthroughs/createMore.html)!
 
 Remember our https://gameontext.org/#/terms. Most importantly, there are kids around: make your parents proud.
 
